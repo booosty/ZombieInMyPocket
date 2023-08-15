@@ -69,13 +69,15 @@ class Player:
     def get_items(self) -> list:
         return self.__items
 
-    def add_item(self, item) -> None:
-        self.__items.append(item)
+    items = property(get_items)
+
+    def add_item(self, item, charges) -> None:
+        self.__items.append([item, charges])
 
     def delete_item(self, item="") -> None:
         if item == "":
             raise Exception("Empty item cannot be deleted.")
 
-        self.__items.pop(self.__items.index(item))
-
-    items = property(get_items, add_item, delete_item)
+        for items in self.__items:
+            if items[0] == item:
+                self.__items.pop(self.__items.index(items))
