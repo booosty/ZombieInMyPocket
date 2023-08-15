@@ -28,12 +28,12 @@ class Commands(cmd.Cmd):
         print("Thank you for playing Zombies in my Pocket!")
         return True
 
-    def do_get_health(self, line):
+    def do_get_status(self, line):
         """
-        Returns players current health
+        Returns players status of current player
         """
         if self.game.state != State.STOPPED:
-            print(self.game.player.health)
+            self.game.get_stats()
         else:
             print(
                 "You are currently not playing a game, use 'start' to start a new game."
