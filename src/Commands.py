@@ -20,6 +20,14 @@ class Commands(cmd.Cmd):
         else:
             print("You are already currently playing the game.")
 
+    @staticmethod
+    def do_exit(self):
+        """
+        Quit Zombies in my Pocket
+        """
+        print("Thank you for playing Zombies in my Pocket!")
+        return True
+
     def do_get_health(self, line):
         """
         Returns players current health
