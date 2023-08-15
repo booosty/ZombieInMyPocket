@@ -1,5 +1,6 @@
 import cmd
 from Game import Game
+from State import State
 
 
 class Commands(cmd.Cmd):
@@ -10,5 +11,22 @@ class Commands(cmd.Cmd):
         self.prompt = ">>"
         self.game = Game()
 
+    def do_start(self, line):
+        """
+        Starts a new game of Zombies in my Pocket
+        """
+        if self.game.state == State.STOPPED:
+            self.game.create_game()
+        else:
+            print("You are already currently playing the game.")
+
     def do_get_health(self, line):
-        print(self.game.player.get_health())
+        """
+        Returns players current health
+        """
+        if self.game.state != State.STOPPED:
+            print(self.game.player.health)
+        else:
+            print(
+                "You are currently not playing a game, use 'start' to start a new game."
+            )

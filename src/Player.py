@@ -11,6 +11,7 @@ class Player:
         self.__items = []
         self.__hold_totem = False
 
+    # Health Getter/Setter
     def get_health(self) -> int:
         return self.__health
 
@@ -19,6 +20,7 @@ class Player:
 
     health = property(get_health, set_health)
 
+    # Attack Getter/Setter
     def get_attack(self) -> int:
         return self.__attack
 
@@ -27,6 +29,7 @@ class Player:
 
     attack = property(get_attack, set_attack)
 
+    # Position X Getter/Setter
     def get_pos_x(self) -> int:
         return self.__pos_x
 
@@ -35,6 +38,7 @@ class Player:
 
     pos_x = property(get_pos_x, set_pos_x)
 
+    # Position Y Getter/Setter
     def get_pos_y(self) -> int:
         return self.__pos_y
 
@@ -43,6 +47,7 @@ class Player:
 
     pos_y = property(get_pos_y, set_pos_y)
 
+    # Direction Getter/Setter
     def get_direction(self) -> Direction:
         return self.__direction
 
@@ -51,6 +56,7 @@ class Player:
 
     direction = property(get_direction, set_direction)
 
+    # Totem Status Getter/Setter
     def get_hold_totem(self) -> bool:
         return self.__hold_totem
 
@@ -59,6 +65,7 @@ class Player:
 
     hold_totem = property(get_hold_totem, set_hold_totem)
 
+    # Item Getter/Setter/Deleter
     def get_items(self) -> list:
         return self.__items
 
@@ -66,6 +73,9 @@ class Player:
         self.__items.append(item)
 
     def delete_item(self, item="") -> None:
+        if item == "":
+            raise Exception("Empty item cannot be deleted.")
+
         self.__items.pop(self.__items.index(item))
 
     items = property(get_items, add_item, delete_item)
