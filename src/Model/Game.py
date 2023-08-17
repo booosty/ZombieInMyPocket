@@ -5,14 +5,13 @@ from Model.State import State
 
 class Game:
     def __init__(self):
-        self.player = None
         self.game_data = GameData()
+        self.player = Player(self.game_data)
         self.state = State.STOPPED
         self.time = 0
 
     def create_game(self):
         print("Starting a new game of Zombies in your Pocket...")
-        self.player = Player()
         self.time = 9
         self.game_data.shuffle_devcard_deck()
         self.game_data.remove_two_devcards()
@@ -26,7 +25,7 @@ class Game:
 
     # Junho
     def draw_devcard(self):
-        if not self.game_data.dev_cards:
+        if len(self.game_data.dev_cards) < 1:
             # All Dev cards have been drawn, reset the deck and increment time
             self.time += 1
             self.game_data.import_dev_cards()
