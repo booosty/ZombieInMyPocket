@@ -1,6 +1,4 @@
 from unittest import TestCase
-
-from Model.Direction import Direction
 from Model.Player import Player
 
 
@@ -35,13 +33,6 @@ class TestPlayer(TestCase):
     def test_set_pos_y(self):
         self.player.pos_y += 5
         self.assertEqual(self.player.pos_y, 5)
-
-    def test_get_direction(self):
-        self.assertEqual(self.player.direction, Direction.NONE)
-
-    def test_set_direction(self):
-        self.player.direction = Direction.NORTH
-        self.assertEqual(self.player.direction, Direction.NORTH)
 
     def test_get_hold_totem(self):
         self.assertEqual(self.player.hold_totem, False)

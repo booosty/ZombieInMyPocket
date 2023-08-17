@@ -1,8 +1,12 @@
 class Tile:
-    def __init__(self, name, x, y):
+    def __init__(self, name, action, room_type, door_n, door_e, door_s, door_w):
         self.__name = name
-        self.__pos_x = x
-        self.__pos_y = y
+        self.__action = action
+        self.__room_type = room_type
+        self.__door_n = door_n
+        self.__door_e = door_e
+        self.__door_s = door_s
+        self.__door_w = door_w
 
     def get_name(self):
         return self.__name
@@ -11,19 +15,3 @@ class Tile:
         self.__name = name
 
     name = property(get_name, set_name)
-
-    def get_pos_x(self) -> int:
-        return self.__pos_x
-
-    def set_pos_x(self, value) -> None:
-        self.__pos_x = value
-
-    pos_x = property(get_pos_x, set_pos_x)
-
-    def get_pos_y(self) -> int:
-        return self.__pos_y
-
-    def set_pos_y(self, value) -> None:
-        self.__pos_y = value
-
-    pos_y = property(get_pos_y, set_pos_y)
