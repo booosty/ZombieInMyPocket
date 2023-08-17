@@ -14,18 +14,24 @@ class Game:
         self.time = 0
 
     def create_game(self):
-        print("Starting a new game of Zombies in your Pocket...")
+        print(
+            "The dead walk the earth. You must search the house for the Evil Temple, and find the zombie totem."
+        )
+        print(
+            "Then take the totem outside, and bury it in the Graveyard, all before the clock strikes midnight."
+        )
         self.time = 9
         self.game_data.shuffle_devcard_deck()
         self.game_data.remove_two_devcards()
         self.game_data.map[self.player.y][
             self.player.x
         ] = self.game_data.get_tile_by_name("Foyer")
-        self.state = State.STARTED
+        self.game_data.remove_tile_by_name("Foyer")
         self.image_handler.create_map_image(self.game_data.map)
+        self.state = State.STARTED
 
     def get_stats(self):
-        print(f"The current time is: {self.time}")
+        print(f"The current time is: {self.time}pm")
         print(f"Your current health is: {self.player.health}")
         print(f"Your current attack is: {self.player.attack}")
         print(f"You currently have the following items: {self.player.items}")

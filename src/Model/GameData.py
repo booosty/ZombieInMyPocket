@@ -8,7 +8,7 @@ from Model.Tile import Tile
 
 class GameData:
     def __init__(self):
-        self.map = [[0] * 8 for i in range(8)]
+        self.map = [[0] * 9 for i in range(9)]
         self.indoor_tiles = []
         self.outdoor_tiles = []
         self.dev_cards = []
@@ -89,9 +89,22 @@ class GameData:
             if tile.name == name:
                 return tile
 
+    def remove_tile_by_name(self, name):
+        for index, tile in enumerate(self.indoor_tiles):
+            if tile.name == name:
+                self.indoor_tiles.pop(index)
+
+        for index, tile in enumerate(self.outdoor_tiles):
+            if tile.name == name:
+                self.indoor_tiles.pop(index)
+
     # Junho
     def shuffle_devcard_deck(self):
         random.shuffle(self.dev_cards)
+
+    def shuffle_tile_cards(self):
+        random.shuffle(self.indoor_tiles)
+        random.shuffle(self.outdoor_tiles)
 
     def remove_two_devcards(self):
         self.dev_cards.pop()

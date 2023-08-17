@@ -7,7 +7,7 @@ class ImageHandler:
         self.size = (150, 150)
         self.root_dir = Path(__file__).parent.parent / "Data" / "Images"
 
-    def create_map_image(self, map, grid=(8, 8)):
+    def create_map_image(self, map, grid=(9, 9)):
         width, height = self.size
 
         image_size = (width * grid[1], height * grid[0])
