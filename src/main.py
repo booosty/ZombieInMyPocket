@@ -1,5 +1,5 @@
 import sys
-from Commands import Commands
+from View.Commands import Commands
 
 
 if __name__ == "__main__":

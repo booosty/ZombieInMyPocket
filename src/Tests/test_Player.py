@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from Direction import Direction
-from Player import Player
+from Model.Direction import Direction
+from Model.Player import Player
 
 
 class TestPlayer(TestCase):

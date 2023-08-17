@@ -1,4 +1,4 @@
-from Player import Player
+from Model.Player import Player
 from State import State
 
 

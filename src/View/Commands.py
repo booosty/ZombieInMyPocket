@@ -1,6 +1,6 @@
 import cmd
-from Game import Game
-from State import State
+from Model.Game import Game
+from Model.State import State
 
 
 class Commands(cmd.Cmd):
