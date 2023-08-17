@@ -1,17 +1,14 @@
-from Model.Direction import Direction
-
-
 class Player:
     def __init__(self):
         self.__health = 6
         self.__attack = 1
         self.__pos_x = 0
         self.__pos_y = 0
-        self.__direction = Direction.NONE
         self.__items = []
         self.__hold_totem = False
+        self.__can_cower = False
+        self.__can_attack = False
 
-    # Health Getter/Setter
     def get_health(self) -> int:
         return self.__health
 
@@ -20,7 +17,6 @@ class Player:
 
     health = property(get_health, set_health)
 
-    # Attack Getter/Setter
     def get_attack(self) -> int:
         return self.__attack
 
@@ -29,7 +25,6 @@ class Player:
 
     attack = property(get_attack, set_attack)
 
-    # Position X Getter/Setter
     def get_pos_x(self) -> int:
         return self.__pos_x
 
@@ -38,7 +33,6 @@ class Player:
 
     pos_x = property(get_pos_x, set_pos_x)
 
-    # Position Y Getter/Setter
     def get_pos_y(self) -> int:
         return self.__pos_y
 
@@ -47,16 +41,6 @@ class Player:
 
     pos_y = property(get_pos_y, set_pos_y)
 
-    # Direction Getter/Setter
-    def get_direction(self) -> Direction:
-        return self.__direction
-
-    def set_direction(self, value) -> None:
-        self.__direction = value
-
-    direction = property(get_direction, set_direction)
-
-    # Totem Status Getter/Setter
     def get_hold_totem(self) -> bool:
         return self.__hold_totem
 
@@ -65,7 +49,22 @@ class Player:
 
     hold_totem = property(get_hold_totem, set_hold_totem)
 
-    # Item Getter/Setter/Deleter
+    def get_can_cower(self) -> bool:
+        return self.__can_cower
+
+    def set_can_cower(self, value) -> None:
+        self.__can_cower = value
+
+    can_cower = property(get_can_cower, set_can_cower)
+
+    def get_can_attack(self) -> bool:
+        return self.__can_attack
+
+    def set_can_attack(self, value) -> None:
+        self.__can_attack = value
+
+    can_attack = property(get_can_attack, set_can_attack)
+
     def get_items(self) -> list:
         return self.__items
 
