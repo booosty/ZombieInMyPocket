@@ -1,5 +1,6 @@
 from Model.DevCard import DevCard
 from Model.GameData import GameData
+from Model.ImageHandler import ImageHandler
 from Model.Player import Player
 from Model.State import State
 
@@ -8,6 +9,7 @@ class Game:
     def __init__(self):
         self.game_data = GameData()
         self.player = Player(self.game_data)
+        self.image_handler = ImageHandler()
         self.state = State.STOPPED
         self.time = 0
 
@@ -20,6 +22,7 @@ class Game:
             self.player.x
         ] = self.game_data.get_tile_by_name("Foyer")
         self.state = State.STARTED
+        self.image_handler.create_map_image(self.game_data.map)
 
     def get_stats(self):
         print(f"The current time is: {self.time}")

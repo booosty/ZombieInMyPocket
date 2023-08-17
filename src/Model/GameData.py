@@ -8,7 +8,7 @@ from Model.Tile import Tile
 
 class GameData:
     def __init__(self):
-        self.map = [[0] * 16 for i in range(16)]
+        self.map = [[0] * 8 for i in range(8)]
         self.indoor_tiles = []
         self.outdoor_tiles = []
         self.dev_cards = []
