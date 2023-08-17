@@ -1,6 +1,7 @@
 from Model.DevCard import DevCard
 from Model.Item import Item
 from Model.Loader import Loader
+from Model.Tile import Tile
 
 
 class GameData:
@@ -9,15 +10,34 @@ class GameData:
         self.dev_card_deck = list(self.dev_card_discard)
         self.dev_card_discard = []
         self.dev_card_deck = list(self.dev_cards)
+        self.tiles = []
         self.dev_cards = []
         self.items = []
         self.loader = Loader()
-
         self.setup_game_data()
 
     def setup_game_data(self):
+        self.import_tiles()
         self.import_dev_cards()
         self.import_items()
+
+    def import_tiles(self):
+        json_data = self.loader.load_data_from_json("tiles")
+
+        for tile in json_data:
+            data = dict(tile)
+            new_tile = Tile(
+                data["tile"],
+                data["action"],
+                data["type"],
+                data["src"],
+                data["north"],
+                data["east"],
+                data["south"],
+                data["west"],
+            )
+
+            self.tiles.append(new_tile)
 
     def import_dev_cards(self):
         json_data = self.loader.load_data_from_json("devcard")
