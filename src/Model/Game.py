@@ -1,3 +1,4 @@
+from Model.DevCard import DevCard
 from Model.GameData import GameData
 from Model.Player import Player
 from Model.State import State
@@ -15,6 +16,10 @@ class Game:
         self.time = 9
         self.game_data.shuffle_devcard_deck()
         self.game_data.remove_two_devcards()
+        self.game_data.map[self.player.x][
+            self.player.y
+        ] = self.game_data.get_tile_by_name("Foyer")
+        print(self.game_data.map)
         self.state = State.STARTED
 
     def get_stats(self):
@@ -24,12 +29,13 @@ class Game:
         print(f"You currently have the following items: {self.player.items}")
 
     # Junho
-    def draw_devcard(self):
+    def draw_devcard(self) -> DevCard:
         if len(self.game_data.dev_cards) < 1:
             # All Dev cards have been drawn, reset the deck and increment time
             self.time += 1
             self.game_data.import_dev_cards()
             self.game_data.shuffle_devcard_deck()
+            self.game_data.remove_two_devcards()
 
         drawn_card = self.game_data.dev_cards.pop(0)
         return drawn_card

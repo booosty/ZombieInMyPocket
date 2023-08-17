@@ -8,6 +8,7 @@ from Model.Tile import Tile
 
 class GameData:
     def __init__(self):
+        self.map = [[0] * 16 for i in range(16)]
         self.tiles = []
         self.dev_cards = []
         self.items = []
@@ -74,6 +75,11 @@ class GameData:
             )
 
             self.items.append(new_item)
+
+    def get_tile_by_name(self, name):
+        for tile in self.tiles:
+            if tile.name == name:
+                return tile
 
     # Junho
     def shuffle_devcard_deck(self):

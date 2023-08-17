@@ -3,8 +3,8 @@ class Player:
         self.game_data = game_data
         self.health = 6
         self.attack = 1
-        self.pos_x = 0
-        self.pos_y = 0
+        self.x = 8
+        self.y = 15
         self.items = []
         self.hold_totem = False
         self.can_cower = False
