@@ -1,6 +1,6 @@
 from Model.GameData import GameData
 from Model.Player import Player
-from State import State
+from Model.State import State
 
 
 class Game:
