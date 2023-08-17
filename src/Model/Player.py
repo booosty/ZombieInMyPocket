@@ -3,7 +3,7 @@ class Player:
         self.game_data = game_data
         self.health = 6
         self.attack = 1
-        self.x = 8
+        self.x = 7
         self.y = 15
         self.items = []
         self.hold_totem = False

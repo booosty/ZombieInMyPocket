@@ -9,7 +9,8 @@ from Model.Tile import Tile
 class GameData:
     def __init__(self):
         self.map = [[0] * 16 for i in range(16)]
-        self.tiles = []
+        self.indoor_tiles = []
+        self.outdoor_tiles = []
         self.dev_cards = []
         self.items = []
         self.loader = Loader()
@@ -36,7 +37,10 @@ class GameData:
                 data["west"],
             )
 
-            self.tiles.append(new_tile)
+            if new_tile.room_type == "Indoor":
+                self.indoor_tiles.append(new_tile)
+            else:
+                self.outdoor_tiles.append(new_tile)
 
     def import_dev_cards(self):
         json_data = self.loader.load_data_from_json("devcard")
@@ -77,7 +81,11 @@ class GameData:
             self.items.append(new_item)
 
     def get_tile_by_name(self, name):
-        for tile in self.tiles:
+        for tile in self.indoor_tiles:
+            if tile.name == name:
+                return tile
+
+        for tile in self.outdoor_tiles:
             if tile.name == name:
                 return tile
 

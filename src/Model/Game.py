@@ -16,10 +16,9 @@ class Game:
         self.time = 9
         self.game_data.shuffle_devcard_deck()
         self.game_data.remove_two_devcards()
-        self.game_data.map[self.player.x][
-            self.player.y
+        self.game_data.map[self.player.y][
+            self.player.x
         ] = self.game_data.get_tile_by_name("Foyer")
-        print(self.game_data.map)
         self.state = State.STARTED
 
     def get_stats(self):
