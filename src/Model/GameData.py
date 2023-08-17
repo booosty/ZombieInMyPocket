@@ -5,6 +5,10 @@ from Model.Loader import Loader
 
 class GameData:
     def __init__(self):
+        self.dev_card_discard = []
+        self.dev_card_deck = list(self.dev_card_discard)
+        self.dev_card_discard = []
+        self.dev_card_deck = list(self.dev_cards)
         self.dev_cards = []
         self.items = []
         self.loader = Loader()
@@ -52,3 +56,18 @@ class GameData:
             )
 
             self.items.append(new_item)
+
+    def initialize_dev_card_deck(self):
+        random.shuffle(self.dev_card_deck)
+
+    def draw_dev_card(self):
+        if not self.dev_card_deck:
+            # All Dev cards have been drawn, reset the deck and increment time
+            self.time += 1
+            random.shuffle(self.dev_card_deck)
+
+        drawn_card = self.dev_card_deck.pop(0)
+        return drawn_card
+
+    def discard_dev_card(self, card):
+        self.dev_card_discard.append(card)
