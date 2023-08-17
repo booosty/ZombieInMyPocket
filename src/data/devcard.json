@@ -4,12 +4,15 @@
     "item": "Oil",
     "effect": {
       "nine": {
-        "message": "You try hard not to wet yourself"
+        "message": "You try hard not to wet yourself",
+        "action": false
       },
       "ten": {
-        "action": "item"
+        "message": false,
+        "action": "add_item"
       },
       "eleven": {
+        "message": false,
         "action": "add_zombies(6)"
       }
     }
@@ -19,6 +22,7 @@
     "item": "Gasoline",
     "effect": {
       "nine": {
+        "message": false,
         "action": "add_zombies(4)"
       },
       "ten": {
@@ -26,7 +30,8 @@
         "action": "set_health(-1)"
       },
       "eleven": {
-        "action": "item"
+        "message": false,
+        "action": "add_item"
       }
     }
   },
@@ -35,9 +40,11 @@
     "item": "Board with Nails",
     "effect": {
       "nine": {
-        "action": "item"
+        "message": false,
+        "action": "add_item"
       },
       "ten": {
+        "message": false,
         "action": "add_zombies(4)"
       },
       "eleven": {
@@ -51,6 +58,7 @@
     "item": "Machete",
     "effect": {
       "nine": {
+        "message": false,
         "action": "add_zombies(4)"
       },
       "ten": {
@@ -58,6 +66,7 @@
         "action": "set_health(-1)"
       },
       "eleven": {
+        "message": false,
         "action": "add_zombies(6)"
       }
     }
@@ -67,9 +76,11 @@
     "item": "Grisly Femur",
     "effect": {
       "nine": {
-        "action": "item"
+        "message": false,
+        "action": "add_item"
       },
       "ten": {
+        "message": false,
         "action": "add_zombies(5)"
       },
       "eleven": {
@@ -87,10 +98,12 @@
         "action": "set_health(-1)"
       },
       "ten": {
+        "message": false,
         "action": "add_zombies(4)"
       },
       "eleven": {
-        "message": "The smell of blood is in the air."
+        "message": "The smell of blood is in the air.",
+        "action": false
       }
     }
   },
@@ -99,12 +112,15 @@
     "item": "Chainsaw",
     "effect": {
       "nine": {
+        "message": false,
         "action": "add_zombies(3)"
       },
       "ten": {
-        "message": "You hear terrible screams"
+        "message": "You hear terrible screams",
+        "action": false
       },
       "eleven": {
+        "message": false,
         "action": "add_zombies(5)"
       }
     }
@@ -118,9 +134,11 @@
         "action": "set_health(1)"
       },
       "ten": {
-        "action": "item"
+        "message": false,
+        "action": "add_item"
       },
       "eleven": {
+        "message": false,
         "action": "add_zombies(4)"
       }
     }
@@ -130,13 +148,15 @@
     "item": "Candle",
     "effect": {
       "nine": {
-        "message": "Your body shivers involuntarily."
+        "message": "Your body shivers involuntarily.",
+        "action": false
       },
       "ten": {
         "message": "You feel a spark of hope.",
         "action": "set_health(1)"
       },
       "eleven": {
+        "message": false,
         "action": "add_zombies(4)"
       }
     }

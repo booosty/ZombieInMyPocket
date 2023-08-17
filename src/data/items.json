@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "name": "Oil",
+    "action": "negate_damage",
+    "uses": 1,
+    "combinable": true,
+    "combines-with": {
+      "1": "Candle"
+    },
+    "makes": {
+      "1": "Oil with Candle"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Gasoline",
+    "action": false,
+    "uses": 1,
+    "combinable": true,
+    "combines-with": {
+      "1": "Candle",
+      "2": "Chainsaw"
+    },
+    "makes": {
+      "1": "Gasoline with Candle",
+      "2": "Full Chainsaw"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Board w/ Nails",
+    "action": "add_attack(1)",
+    "uses": 1,
+    "combinable": false,
+    "combines-with": null,
+    "makes": null
+  },
+  {
+    "id": 4,
+    "name": "Can of Soda",
+    "action": "add_health(2)",
+    "uses": 1,
+    "combinable": false,
+    "combines-with": null,
+    "makes": null
+  },
+  {
+    "id": 5,
+    "name": "Grisly Femur",
+    "action": "add_attack(1)",
+    "uses": 1,
+    "combinable": false,
+    "combines-with": null,
+    "makes": null
+  },
+    {
+    "id": 6,
+    "name": "Candle",
+    "action": null,
+    "uses": 1,
+    "combinable": false,
+    "combines-with": null,
+    "makes": null
+  },
+  {
+    "id": 7,
+    "name": "Chainsaw",
+    "action": "add_attack(3)",
+    "uses": 2,
+    "combinable": false,
+    "combines-with": null,
+    "makes": null
+  },
+  {
+    "id": 8,
+    "name": "Machete",
+    "action": "add_attack(2)",
+    "uses": 1,
+    "combinable": false,
+    "combines-with": null,
+    "makes": null
+  },
+  {
+    "id": 9,
+    "name": "Oil with Candle",
+    "action": "kill_all_zombies()",
+    "uses": 1,
+    "combinable": false,
+    "combines-with": null,
+    "makes": null
+  },
+  {
+    "id": 9,
+    "name": "Gasoline with Candle",
+    "action": "kill_all_zombies()",
+    "uses": 1,
+    "combinable": false,
+    "combines-with": null,
+    "makes": null
+  }
+]
