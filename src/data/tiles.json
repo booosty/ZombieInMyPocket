@@ -1,0 +1,178 @@
+[
+  {
+    "id": 0,
+    "name": "Garden",
+    "src": "garden.png",
+    "action": "set_health(1)",
+    "type": "Outdoor",
+    "north": false,
+    "east": true,
+    "south": true,
+    "west": true
+  },
+  {
+    "id": 1,
+    "name": "Sitting Area",
+    "src": "sitting_area.png",
+    "action": false,
+    "type": "Outdoor",
+    "north": false,
+    "east": true,
+    "south": true,
+    "west": true
+  },
+  {
+    "id": 2,
+    "name": "Yard1",
+    "src": "yard1.png",
+    "action": false,
+    "type": "Outdoor",
+    "north": false,
+    "east": true,
+    "south": true,
+    "west": true
+  },
+  {
+    "id": 3,
+    "name": "Graveyard",
+    "src": "graveyard.png",
+    "action": "bury_totem()",
+    "type": "Outdoor",
+    "north": false,
+    "east": true,
+    "south": true,
+    "west": false
+  },
+  {
+    "id": 4,
+    "name": "Garage",
+    "src": "garage.png",
+    "action": false,
+    "type": "Outdoor",
+    "north": false,
+    "east": false,
+    "south": true,
+    "west": true
+  },
+  {
+    "id": 5,
+    "name": "Patio",
+    "src": "patio.png",
+    "action": false,
+    "type": "Outdoor",
+    "north": true,
+    "east": true,
+    "south": true,
+    "west": false
+  },
+  {
+    "id": 6,
+    "name": "Yard2",
+    "src": "yard2.png",
+    "action": false,
+    "type": "Outdoor",
+    "north": false,
+    "east": true,
+    "south": true,
+    "west": true
+  },
+  {
+    "id": 7,
+    "name": "Yard3",
+    "src": "yard3.png",
+    "action": false,
+    "type": "Outdoor",
+    "north": false,
+    "east": true,
+    "south": true,
+    "west": true
+  },
+  {
+    "id": 8,
+    "name": "Bathroom",
+    "src": "bathroom.png",
+    "action": false,
+    "type": "Indoor",
+    "north": true,
+    "east": false,
+    "south": false,
+    "west": false
+  },
+  {
+    "id": 9,
+    "name": "Kitchen",
+    "src": "kitchen.png",
+    "action": "set_health(1)",
+    "type": "Indoor",
+    "north": true,
+    "east": true,
+    "south": false,
+    "west": true
+  },
+    {
+    "id": 10,
+    "name": "Storage",
+    "src": "storage.png",
+    "action": "find_item()",
+    "type": "Indoor",
+    "north": true,
+    "east": false,
+    "south": false,
+    "west": false
+  },
+    {
+    "id": 11,
+    "name": "Evil Temple",
+    "src": "evil_temple.png",
+    "action": "find_totem()",
+    "type": "Indoor",
+    "north": false,
+    "east": true,
+    "south": false,
+    "west": true
+  },
+    {
+    "id": 12,
+    "name": "Family Room",
+    "src": "family_room.png",
+    "action": null,
+    "type": "Indoor",
+    "north": true,
+    "east": true,
+    "south": false,
+    "west": true
+  },
+    {
+    "id": 13,
+    "name": "Dining Room",
+    "src": "dining_room.png",
+    "action": null,
+    "type": "Indoor",
+    "north": true,
+    "east": true,
+    "south": true,
+    "west": true
+  },
+  {
+    "id": 14,
+    "name": "Bedroom",
+    "src": "bedroom.png",
+    "action": null,
+    "type": "Indoor",
+    "north": true,
+    "east": false,
+    "south": false,
+    "west": true
+  },
+  {
+    "id": 15,
+    "name": "Foyer",
+    "src": "foyer.png",
+    "action": null,
+    "type": "Indoor",
+    "north": true,
+    "east": false,
+    "south": false,
+    "west": false
+  }
+]
