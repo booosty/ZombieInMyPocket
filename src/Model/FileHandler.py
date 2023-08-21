@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 
-class Loader:
+class FileHandler:
     def __init__(self):
         self.root_dir = Path(__file__).parent.parent / "Data"
 

@@ -2,7 +2,7 @@ import random
 
 from Model.DevCard import DevCard
 from Model.Item import Item
-from Model.Loader import Loader
+from Model.FileHandler import FileHandler
 from Model.Tile import Tile
 
 
@@ -13,7 +13,7 @@ class GameData:
         self.outdoor_tiles = []
         self.dev_cards = []
         self.items = []
-        self.loader = Loader()
+        self.file_handler = FileHandler()
         self.setup_game_data()
 
     def setup_game_data(self):
@@ -22,7 +22,7 @@ class GameData:
         self.import_items()
 
     def import_tiles(self):
-        json_data = self.loader.load_data_from_json("tiles")
+        json_data = self.file_handler.load_data_from_json("tiles")
 
         for tile in json_data:
             data = dict(tile)
@@ -43,7 +43,7 @@ class GameData:
                 self.outdoor_tiles.append(new_tile)
 
     def import_dev_cards(self):
-        json_data = self.loader.load_data_from_json("devcard")
+        json_data = self.file_handler.load_data_from_json("devcard")
 
         for card in json_data:
             data = dict(card)
@@ -65,7 +65,7 @@ class GameData:
             self.dev_cards.append(dev_card)
 
     def import_items(self):
-        json_data = self.loader.load_data_from_json("items")
+        json_data = self.file_handler.load_data_from_json("items")
 
         for item in json_data:
             data = dict(item)
