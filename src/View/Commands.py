@@ -17,6 +17,7 @@ class Commands(cmd.Cmd):
         """
         if self.game.state == State.STOPPED:
             self.game.create_game()
+            self.game.get_game_status()
         else:
             print("You are already currently playing the game.")
 
@@ -33,7 +34,7 @@ class Commands(cmd.Cmd):
         Returns players status of current player
         """
         if self.game.state != State.STOPPED:
-            self.game.get_stats()
+            self.game.get_player_stats()
         else:
             print(
                 "You are currently not playing a game, use 'start' to start a new game."

@@ -89,7 +89,7 @@ class GameData:
             if tile.name == name:
                 return tile
 
-    def remove_tile_by_name(self, name):
+    def remove_tile_from_deck_by_name(self, name):
         for index, tile in enumerate(self.indoor_tiles):
             if tile.name == name:
                 self.indoor_tiles.pop(index)
