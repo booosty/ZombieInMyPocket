@@ -1,4 +1,5 @@
 from Model.DevCard import DevCard
+from Model.Direction import Direction
 from Model.GameData import GameData
 from Model.ImageHandler import ImageHandler
 from Model.Player import Player
@@ -10,6 +11,8 @@ class Game:
         self.game_data = GameData()
         self.player = Player(self.game_data)
         self.image_handler = ImageHandler()
+        self.current_direction = Direction.NORTH
+        self.current_zombie_count = 0
         self.state = State.STOPPED
         self.time = 0
 
@@ -20,17 +23,53 @@ class Game:
         print(
             "Then take the totem outside, and bury it in the Graveyard, all before the clock strikes midnight."
         )
+        print("-" * 100)
         self.time = 9
         self.game_data.shuffle_devcard_deck()
         self.game_data.remove_two_devcards()
         self.game_data.map[self.player.y][
             self.player.x
         ] = self.game_data.get_tile_by_name("Foyer")
-        self.game_data.remove_tile_by_name("Foyer")
+        self.game_data.remove_tile_from_deck_by_name("Foyer")
         self.image_handler.create_map_image(self.game_data.map)
-        self.state = State.STARTED
+        self.state = State.MOVING
 
-    def get_stats(self):
+    def get_game_status(self):
+        current_tile = self.get_current_tile()
+        current_doors = self.get_doors_string(current_tile)
+
+        state = ""
+        state_message = ""
+        match self.state:
+            case State.MOVING:
+                state = "Moving"
+                state_message = (
+                    "You can move direction by typing move_n, move_e, move_s, move_w"
+                )
+
+        print(
+            f"Your current tile is {current_tile.name}, current doors available are: {current_doors}"
+        )
+        print(f"Your current state is: {state}")
+        print(state_message)
+
+    def get_current_tile(self):
+        return self.game_data.map[self.player.y][self.player.x]
+
+    @staticmethod
+    def get_doors_string(tile):
+        doors = ""
+        if tile.door_n:
+            doors += "NORTH "
+        if tile.door_e:
+            doors += "EAST "
+        if tile.door_s:
+            doors += "SOUTH "
+        if tile.door_w:
+            doors += "WEST "
+        return doors
+
+    def get_player_stats(self):
         print(f"The current time is: {self.time}pm")
         print(f"Your current health is: {self.player.health}")
         print(f"Your current attack is: {self.player.attack}")
