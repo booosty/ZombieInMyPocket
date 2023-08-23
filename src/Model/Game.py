@@ -14,6 +14,7 @@ class Game:
         self.image_handler = ImageHandler()
         self.current_zombie_count = 0
         self.state = State.STOPPED
+        self.has_won = True
         self.time = 0
 
     def create_game(self):
@@ -41,7 +42,17 @@ class Game:
         current_doors = self.get_doors_string(current_tile)
 
         if self.time == 12:
-            print("Sorry time has run out for you! You loose.")
+            print(
+                Fore.RED
+                + "Sorry time has run out for you! You loose."
+                + Style.RESET_ALL
+            )
+            exit()
+
+        if self.has_won:
+            print(
+                Fore.GREEN + "Congratulations you have won the game!" + Style.RESET_ALL
+            )
             exit()
 
         state = Fore.BLUE + ""
@@ -227,6 +238,30 @@ class Game:
     def get_current_tile(self):
         return self.game_data.map[self.player.y][self.player.x]
 
+    def search_tile(self):
+        current_tile = self.get_current_tile()
+        if current_tile.name == "Evil Temple":
+            self.player.hold_totem = True
+            print(
+                Fore.MAGENTA
+                + "You have found the totem and quickly grab it, now go and bury it in the graveyard!"
+                + Style.RESET_ALL
+            )
+        else:
+            print(
+                Fore.CYAN + "Nope, nothing to be found around here!" + Style.RESET_ALL
+            )
+
+    def bury_totem(self):
+        current_tile = self.get_current_tile()
+        if current_tile.name == "Graveyard" and self.player.hold_totem:
+            self.has_won = True
+        elif not self.player.hold_totem:
+            print(Fore.RED + "You do not currently hold the totem" + Style.RESET_ALL)
+        else:
+            print(Fore.RED + "You are not currently at the Graveyard" + Style.RESET_ALL)
+        self.get_game_status()
+
     @staticmethod
     def get_doors_string(tile):
         doors = ""
@@ -249,7 +284,7 @@ class Game:
 
     # Junho
     def draw_devcard(self):
-        if len(self.game_data.dev_cards) < 1:
+        if len(self.game_data.dev_cards) <= 1:
             # All Dev cards have been drawn, reset the deck and increment time
             self.time += 1
             self.game_data.import_dev_cards()
@@ -260,7 +295,7 @@ class Game:
                 + "You have drawn all the cards available. Resetting deck."
                 + Style.RESET_ALL
             )
-            print(Fore.GREEN + "It is now {self.time} pm" + Style.RESET_ALL)
+            print(Fore.GREEN + f"It is now {self.time} pm" + Style.RESET_ALL)
 
         drawn_card = self.game_data.dev_cards.pop(0)
         self.state = State.MOVING

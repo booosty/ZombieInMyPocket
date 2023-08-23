@@ -123,24 +123,24 @@ class Commands(cmd.Cmd):
         """
         Searches the current tile to see if the Totem is around
         """
-        if self.game.state == State.DRAWING or State.ROTATING:
-            current_tile = self.game.get_current_tile()
-            if current_tile.name == "Evil Temple":
-                self.game.player.hold_totem = True
-                print(
-                    Fore.MAGENTA
-                    + "You have found the totem and quickly grab it, now go and bury it in the graveyard!"
-                    + Style.RESET_ALL
-                )
-            else:
-                print(
-                    Fore.CYAN
-                    + "Nope, nothing to be found around here!"
-                    + Style.RESET_ALL
-                )
+        if self.game.state != State.STOPPED:
+            self.game.search_tile()
         else:
             print(
                 Fore.RED + "You can't currently search at the moment" + Style.RESET_ALL
+            )
+
+    def do_bury(self, line):
+        """
+        Bury the totem at the Graveyard
+        """
+        if self.game.state != State.STOPPED:
+            self.game.bury_totem()
+        else:
+            print(
+                Fore.RED
+                + "You can't currently use this command at the moment"
+                + Style.RESET_ALL
             )
 
     @staticmethod
