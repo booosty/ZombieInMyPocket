@@ -177,9 +177,9 @@ class Game:
 
     def cower(self):
         if self.state == State.MOVING:
-            current_tile = self.get_current_tile()
             self.state = State.COWERING
             self.player.health += 3  # Gain 3 health
+            self.game_data.discard_devcard()
             print(
                 Fore.MAGENTA
                 + "You cower in fear and gain 3 health. You are staying in the current tile for this turn."
