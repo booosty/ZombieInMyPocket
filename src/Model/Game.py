@@ -383,7 +383,14 @@ class Game:
                     if devcard.nine_action == "add_zombies":
                         self.add_zombies(devcard.nine_action_amount)
                     if devcard.nine_action == "add_item":
-                        self.player.add_item(devcard.item)
+                        confirm = input(
+                            Fore.MAGENTA
+                            + "Item! Do you wish to draw another card to find out what it is? (y/n): "
+                            + Style.RESET_ALL
+                        )
+                        if confirm.lower() == "y":
+                            next_card = self.game_data.dev_cards.pop(0)
+                            self.player.add_item(next_card.item)
 
             case 10:
                 if devcard.ten_message:
@@ -398,7 +405,14 @@ class Game:
                     if devcard.ten_action == "add_zombies":
                         self.add_zombies(devcard.ten_action_amount)
                     if devcard.ten_action == "add_item":
-                        self.player.add_item(devcard.item)
+                        confirm = input(
+                            Fore.MAGENTA
+                            + "Item! Do you wish to draw another card to find out what it is? (y/n): "
+                            + Style.RESET_ALL
+                        )
+                        if confirm.lower() == confirm.startswith("y"):
+                            next_card = self.game_data.dev_cards.pop(0)
+                            self.player.add_item(next_card.item)
 
             case 11:
                 if devcard.eleven_message:
@@ -413,7 +427,14 @@ class Game:
                     if devcard.eleven_action == "add_zombies":
                         self.add_zombies(devcard.eleven_action_amount)
                     if devcard.eleven_action == "add_item":
-                        self.player.add_item(devcard.item)
+                        confirm = input(
+                            Fore.MAGENTA
+                            + "Item! Do you wish to draw another card to find out what it is? (y/n): "
+                            + Style.RESET_ALL
+                        )
+                        if confirm.lower() == "y":
+                            next_card = self.game_data.dev_cards.pop(0)
+                            self.player.add_item(next_card.item)
 
     def add_zombies(self, amount):
         self.current_zombie_count += amount
