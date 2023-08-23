@@ -223,18 +223,24 @@ class Game:
                 + Style.RESET_ALL
             )
 
-    def rotate_tile(self):
-        current_tile = self.get_current_tile()
-        if current_tile.rotate_factor == 3:
-            current_tile.rotate_factor = 0
+    def rotate_tile(self, tile):
+        if tile.name == "Patio":
+            tile.rotate_factor = (tile.rotate_factor + 2) % 4
+            temp = tile.door_n
+            tile.door_n = tile.door_s
+            tile.door_s = temp
+            tile.door_e = False  # Patio tile doesn't have an east-facing door
         else:
-            current_tile.rotate_factor += 1
+            if tile.rotate_factor == 3:
+                tile.rotate_factor = 0
+            else:
+                tile.rotate_factor += 1
 
-        temp = current_tile.door_w
-        current_tile.door_w = current_tile.door_s
-        current_tile.door_s = current_tile.door_e
-        current_tile.door_e = current_tile.door_n
-        current_tile.door_n = temp
+            temp = tile.door_w
+            tile.door_w = tile.door_s
+            tile.door_s = tile.door_e
+            tile.door_e = tile.door_n
+            tile.door_n = temp
 
         self.image_handler.create_map_image(self.game_data.map, self.player)
 
@@ -263,6 +269,22 @@ class Game:
                 + "Sorry the doors to not match up, try rotating and matching the doors."
                 + Style.RESET_ALL
             )
+            return
+
+        if current_tile.name == "Dining Room":
+            patio_tile = next((tile for tile in self.game_data.outdoor_tiles if tile.name == "Patio"), None)
+            if patio_tile:
+                self.game_data.map[self.player.y - 1][self.player.x] = patio_tile
+                self.rotate_tile(patio_tile)  # Rotate the Patio tile by 180 degrees
+                self.game_data.outdoor_tiles.remove(patio_tile)
+                self.image_handler.create_map_image(self.game_data.map, self.player)
+                self.state = State.MOVING  # Set the state to MOVING
+                self.move_player(Direction.NORTH)  # Move player to the newly placed Patio tile
+                self.get_game_status()
+            else:
+                print(Fore.RED + "Patio tile not found in outdoor tiles!" + Style.RESET_ALL)
+                return
+
 
     def get_current_tile(self):
         return self.game_data.map[self.player.y][self.player.x]

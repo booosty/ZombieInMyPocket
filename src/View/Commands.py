@@ -102,7 +102,8 @@ class Commands(cmd.Cmd):
         Rotates the current tile 90 degrees clockwise
         """
         if self.game.state == State.ROTATING:
-            self.game.rotate_tile()
+            current_tile = self.game.get_current_tile()
+            self.game.rotate_tile(current_tile)  # Pass the current tile to the rotate_tile method
             self.game.get_game_status()
         else:
             print(
