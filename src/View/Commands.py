@@ -128,10 +128,10 @@ class Commands(cmd.Cmd):
         """
         Draws a new dev card from the pile
         """
-        if self.game.state == State.DRAWING:
+        if self.game.state == State.DRAWING or State.MOVING:
             self.game.draw_devcard()
         else:
-            print(Fore.RED + "You are not in the drawing state" + Style.RESET_ALL)
+            print(Fore.RED + "You are not in the drawing or moving state" + Style.RESET_ALL)
 
     def do_search(self, line):
         """

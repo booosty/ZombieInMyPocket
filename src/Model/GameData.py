@@ -113,9 +113,6 @@ class GameData:
         random.shuffle(self.indoor_tiles)
         random.shuffle(self.outdoor_tiles)
 
-    def discard_devcard(self):
-        self.dev_cards.pop()
-
     def remove_two_devcards(self):
         self.dev_cards.pop()
         self.dev_cards.pop()

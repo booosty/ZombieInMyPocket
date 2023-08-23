@@ -15,6 +15,7 @@ class Game:
         self.current_zombie_count = 0
         self.state = State.STOPPED
         self.time = 0
+        self.devcard_draw_count = 0
 
     def create_game(self):
         print(Fore.YELLOW)
@@ -172,6 +173,7 @@ class Game:
         else:
             self.state = State.MOVING
 
+        self.devcard_draw_count = 0
         self.image_handler.create_map_image(self.game_data.map, self.player)
         self.get_game_status()
 
@@ -179,13 +181,17 @@ class Game:
         if self.state == State.MOVING:
             self.state = State.COWERING
             self.player.health += 3  # Gain 3 health
-            self.game_data.discard_devcard()
+            self.discard_devcard()
             print(
                 Fore.MAGENTA
-                + "You cower in fear and gain 3 health. You are staying in the current tile for this turn."
+                + f"You cower in fear and gain 3 health. You now have {self.player.health} health"
                 + Style.RESET_ALL
             )
-
+            print(
+                Fore.RED
+                + f"You discard 1 dev card and have {len(self.game_data.dev_cards)} left in the pile."
+                + Style.RESET_ALL
+            )
         else:
             print(Fore.RED + "You can only cower when you are allowed to move." + Style.RESET_ALL)
         self.state = State.MOVING
@@ -263,6 +269,9 @@ class Game:
     def search_tile(self):
         current_tile = self.get_current_tile()
         if current_tile.name == "Evil Temple":
+            if self.devcard_draw_count != 2:
+                print(Fore.RED + "You must draw at least 2 dev cards to obtain the totem." + Style.RESET_ALL)
+                return
             self.player.hold_totem = True
             print(
                 Fore.MAGENTA
@@ -305,10 +314,10 @@ class Game:
         print(f"You currently have the following items: {self.player.items}")
 
     # Junho
-    def draw_devcard(self):
+    def discard_devcard(self):
         if len(self.game_data.dev_cards) <= 1:
-            # All Dev cards have been drawn, reset the deck and increment time
             self.time += 1
+            self.game_data.dev_cards = []
             self.game_data.import_dev_cards()
             self.game_data.shuffle_devcard_deck()
             self.game_data.remove_two_devcards()
@@ -317,8 +326,26 @@ class Game:
                 + "You have drawn all the cards available. Resetting deck."
                 + Style.RESET_ALL
             )
-            print(Fore.GREEN + "It is now {self.time} pm" + Style.RESET_ALL)
+            print(Fore.GREEN + f"It is now {self.time} pm" + Style.RESET_ALL)
+        else:
+            self.game_data.dev_cards.pop()
+
+    def draw_devcard(self):
+        if len(self.game_data.dev_cards) <= 1:
+            # All Dev cards have been drawn, reset the deck and increment time
+            self.time += 1
+            self.game_data.dev_cards = []
+            self.game_data.import_dev_cards()
+            self.game_data.shuffle_devcard_deck()
+            self.game_data.remove_two_devcards()
+            print(
+                Fore.CYAN
+                + "You have drawn all the cards available. Resetting deck."
+                + Style.RESET_ALL
+            )
+            print(Fore.GREEN + f"It is now {self.time} pm" + Style.RESET_ALL)
 
         drawn_card = self.game_data.dev_cards.pop(0)
+        self.devcard_draw_count += 1
         self.state = State.MOVING
         self.get_game_status()
