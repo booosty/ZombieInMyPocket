@@ -66,7 +66,6 @@ class Commands(cmd.Cmd):
     def do_rotate(self, line):
         """
         Rotates the current tile 90 degrees clockwise
-        :return:
         """
         if self.game.state == State.ROTATING:
             self.game.rotate_tile()
@@ -77,12 +76,36 @@ class Commands(cmd.Cmd):
     def do_place(self, line):
         """
         Places tile at current location and rotation
-        :return:
         """
         if self.game.state == State.ROTATING:
             self.game.place_tile()
         else:
             print("You are currently not in the rotating state")
+
+    def do_draw(self, line):
+        """
+        Draws a new dev card from the pile
+        """
+        if self.game.state == State.DRAWING:
+            self.game.draw_devcard()
+        else:
+            print("You are not in the drawing state")
+
+    def do_search(self, line):
+        """
+        Searches the current tile to see if the Totem is around
+        """
+        if self.game.state == State.DRAWING or State.ROTATING:
+            current_tile = self.game.get_current_tile()
+            if current_tile.name == "Evil Temple":
+                self.game.player.hold_totem = True
+                print(
+                    "You have found the totem and quickly grab it, now go and bury it in the graveyard!"
+                )
+            else:
+                print("Nope, nothing to be found around here!")
+        else:
+            print("You can't currently search at the moment")
 
     @staticmethod
     def do_exit(self):
