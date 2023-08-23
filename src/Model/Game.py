@@ -52,7 +52,6 @@ class Game:
             print(
                 Fore.GREEN + "Congratulations you have won the game!" + Style.RESET_ALL
             )
-            print("Sorry time has run out for you! You lose.")
             exit()
 
         state = Fore.BLUE + ""
@@ -191,6 +190,7 @@ class Game:
             print(Fore.RED + "You can only cower when you are allowed to move." + Style.RESET_ALL)
         self.state = State.MOVING
         # Need to display the movement and the current state message here.
+        self.get_game_status()
 
     def check_tile_action(self, tile):
         if tile.action == "add_health":
@@ -306,7 +306,7 @@ class Game:
 
     # Junho
     def draw_devcard(self):
-        if len(self.game_data.dev_cards) < 1:
+        if len(self.game_data.dev_cards) <= 1:
             # All Dev cards have been drawn, reset the deck and increment time
             self.time += 1
             self.game_data.import_dev_cards()
