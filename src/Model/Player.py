@@ -142,7 +142,7 @@ class Player:
 
     def use_item(self, index):
         index_num = int(index)
-        if index_num > 2:
+        if index_num > 2 or index_num > len(self.items):
             print(
                 Fore.RED
                 + f"Error: Invalid Index"

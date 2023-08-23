@@ -381,7 +381,7 @@ class Game:
                             + "Item! Do you wish to draw another card to find out what it is? (y/n): "
                             + Style.RESET_ALL
                         )
-                        if confirm.lower() == "y":
+                        if confirm.strip() == "y":
                             next_card = self.game_data.dev_cards.pop(0)
                             self.player.add_item(next_card.item)
 
@@ -403,7 +403,7 @@ class Game:
                             + "Item! Do you wish to draw another card to find out what it is? (y/n): "
                             + Style.RESET_ALL
                         )
-                        if confirm.lower() == confirm.startswith("y"):
+                        if confirm.strip() == "y":
                             next_card = self.game_data.dev_cards.pop(0)
                             self.player.add_item(next_card.item)
 
@@ -425,7 +425,7 @@ class Game:
                             + "Item! Do you wish to draw another card to find out what it is? (y/n): "
                             + Style.RESET_ALL
                         )
-                        if confirm.lower() == "y":
+                        if confirm.strip() == "y":
                             next_card = self.game_data.dev_cards.pop(0)
                             self.player.add_item(next_card.item)
 
