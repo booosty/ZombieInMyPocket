@@ -29,7 +29,7 @@
   },
   {
     "id": 2,
-    "name": "Board w/ Nails",
+    "name": "Board with Nails",
     "action": "add_attack(1)",
     "uses": 1,
     "combinable": false,

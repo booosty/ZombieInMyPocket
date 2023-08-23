@@ -33,7 +33,7 @@ class Commands(cmd.Cmd):
         :return:
         """
         if self.game.state == State.MOVING:
-            self.game.move_player(Direction.NORTH)
+            self.game.move_player(Direction.NORTH, self.game.run_from_zombies)
         else:
             print(
                 Fore.RED
@@ -47,7 +47,7 @@ class Commands(cmd.Cmd):
         :return:
         """
         if self.game.state == State.MOVING:
-            self.game.move_player(Direction.EAST)
+            self.game.move_player(Direction.EAST, self.game.run_from_zombies)
         else:
             print(
                 Fore.RED
@@ -61,7 +61,7 @@ class Commands(cmd.Cmd):
         :return:
         """
         if self.game.state == State.MOVING:
-            self.game.move_player(Direction.SOUTH)
+            self.game.move_player(Direction.SOUTH, self.game.run_from_zombies)
         else:
             print(
                 Fore.RED
@@ -75,13 +75,14 @@ class Commands(cmd.Cmd):
         :return:
         """
         if self.game.state == State.MOVING:
-            self.game.move_player(Direction.WEST)
+            self.game.move_player(Direction.WEST, self.game.run_from_zombies)
         else:
             print(
                 Fore.RED
                 + "You are currently not in the moving state."
                 + Style.RESET_ALL
             )
+
     def do_cower(self, line):
         """
         Player cowers in their current tile
@@ -95,7 +96,6 @@ class Commands(cmd.Cmd):
                 + "You can not cower right now"
                 + Style.RESET_ALL
             )
-
 
     def do_rotate(self, line):
         """
@@ -157,6 +157,32 @@ class Commands(cmd.Cmd):
                 + Style.RESET_ALL
             )
 
+    def do_attack(self, line):
+        """
+        Attack zombies that have appeared.
+        """
+        if self.game.state == State.BATTLE:
+            self.game.player.do_attack()
+        else:
+            print(
+                Fore.RED
+                + "You can't attack when there are no zombies around."
+                + Style.RESET_ALL
+            )
+
+    def do_run(self, line):
+        """
+        Run away from a zombie attack - losing 1 health.
+        """
+        if self.game.state == State.BATTLE:
+            self.game.player.do_run()
+        else:
+            print(
+                Fore.RED
+                + "You can't run when there are no zombies around."
+                + Style.RESET_ALL
+            )
+
     def do_get_inventory(self, line):
         """
         Displays items that you currently hold in inventory and charges left.
@@ -169,6 +195,7 @@ class Commands(cmd.Cmd):
                 + "You can't currently use this command at the moment"
                 + Style.RESET_ALL
             )
+
     @staticmethod
     def do_exit(self):
         """

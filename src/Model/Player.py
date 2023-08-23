@@ -25,7 +25,7 @@ class Player:
 
         print(
             Fore.MAGENTA
-            + f"You {verb} 1 health!, you now have {self.health} health."
+            + f"You {verb} {amount} health!, you now have {self.health} health."
             + Style.RESET_ALL
         )
 
@@ -50,7 +50,7 @@ class Player:
             if items.name == item:
                 print(
                     Fore.CYAN
-                    + f"{items.name} with {items.uses} has been added to your inventory."
+                    + f"{items.name} with {items.uses} uses has been added to your inventory."
                     + Style.RESET_ALL
                 )
                 self.items.append([items.name, items.uses])
@@ -77,3 +77,37 @@ class Player:
         for items in self.items:
             if items[0] == item:
                 self.items.pop(self.items.index(items))
+
+    def do_attack(self):
+        zombies_left = self.game.current_zombie_count - self.attack
+        print(
+            Fore.YELLOW
+            + f"You attack the zombies.."
+            + Style.RESET_ALL
+        )
+        self.set_health(-zombies_left)
+        if (self.attack - zombies_left) <= 0:
+            self.attack = 0
+        else:
+            self.attack -= zombies_left
+
+        print(
+            Fore.RED
+            + f"You now have {self.attack} attack."
+            + Style.RESET_ALL
+        )
+        self.game.current_zombie_count = 0
+        self.game.state = State.MOVING
+        self.game.get_game_status()
+
+    def do_run(self):
+        self.set_health(-1)
+        print(
+            Fore.YELLOW
+            + f"You run away from the Zombies..."
+            + Style.RESET_ALL
+        )
+        self.game.current_zombie_count = 0
+        self.game.state = State.MOVING
+        self.game.run_from_zombies = True
+        self.game.get_game_status()
