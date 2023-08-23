@@ -9,7 +9,7 @@ from colorama import Fore, Style
 class Game:
     def __init__(self):
         self.game_data = GameData()
-        self.player = Player(self.game_data)
+        self.player = Player(self.game_data, self)
         self.current_direction = None
         self.image_handler = ImageHandler()
         self.current_zombie_count = 0
@@ -64,7 +64,7 @@ class Game:
             case State.MOVING:
                 state += "Moving"
                 state_message += (
-                    "You can move direction by typing move_n, move_e, move_s, move_w OR cower"
+                    "You can move direction by typing move_n, move_e, move_s, move_w or cower"
                 )
             case State.ROTATING:
                 state += "Rotating"
@@ -77,10 +77,12 @@ class Game:
                 state_message += "Type 'draw' to draw a random card."
 
             case State.COWERING:
-                state += "COWERING"
+                state += "Cowering"
                 state_message += (
                     "You are cowering in fear. You will stay in the current tile for this turn."
                 )
+            case State.BATTLE:
+                state += "Battle"
 
         state += Style.RESET_ALL
         state_message += Style.RESET_ALL
@@ -180,7 +182,7 @@ class Game:
     def cower(self):
         if self.state == State.MOVING:
             self.state = State.COWERING
-            self.player.health += 3  # Gain 3 health
+            self.player.set_health(3)
             self.discard_devcard()
             print(
                 Fore.MAGENTA
@@ -200,7 +202,7 @@ class Game:
 
     def check_tile_action(self, tile):
         if tile.action == "add_health":
-            self.player.health += 1
+            self.player.set_health(3)
             print(
                 Fore.MAGENTA
                 + f"You gain 1 health!, you now have {self.player.health} health."
@@ -347,7 +349,72 @@ class Game:
             )
             print(Fore.GREEN + f"It is now {self.time} pm" + Style.RESET_ALL)
 
+        print(
+            Fore.YELLOW
+            + "Drawing a dev card from the pile..."
+            + Style.RESET_ALL
+        )
+
         drawn_card = self.game_data.dev_cards.pop(0)
+        self.do_devcard_effect(drawn_card)
         self.devcard_draw_count += 1
-        self.state = State.MOVING
+        if self.state != State.BATTLE:
+            self.state = State.MOVING
         self.get_game_status()
+
+    def do_devcard_effect(self, devcard):
+        match self.time:
+            case 9:
+                if devcard.nine_message:
+                    print(
+                        Fore.YELLOW
+                        + f"{devcard.nine_message}"
+                        + Style.RESET_ALL
+                    )
+                if devcard.nine_action:
+                    if devcard.nine_action == "set_health":
+                        self.player.set_health(devcard.nine_action_amount)
+                    if devcard.nine_action == "add_zombies":
+                        self.add_zombies(devcard.nine_action_amount)
+                    if devcard.nine_action == "add_item":
+                        self.player.add_item(devcard.item)
+
+            case 10:
+                if devcard.ten_message:
+                    print(
+                        Fore.YELLOW
+                        + f"{devcard.ten_message}"
+                        + Style.RESET_ALL
+                    )
+                if devcard.ten_action:
+                    if devcard.ten_action == "set_health":
+                        self.player.set_health(devcard.ten_action_amount)
+                    if devcard.ten_action == "add_zombies":
+                        self.add_zombies(devcard.ten_action_amount)
+                    if devcard.ten_action == "add_item":
+                        self.player.add_item(devcard.item)
+
+            case 11:
+                if devcard.eleven_message:
+                    print(
+                        Fore.YELLOW
+                        + f"{devcard.eleven_message}"
+                        + Style.RESET_ALL
+                    )
+                if devcard.eleven_action:
+                    if devcard.eleven_action == "set_health":
+                        self.player.set_health(devcard.eleven_action_amount)
+                    if devcard.eleven_action == "add_zombies":
+                        self.add_zombies(devcard.eleven_action_amount)
+                    if devcard.eleven_action == "add_item":
+                        self.player.add_item(devcard.item)
+
+    def add_zombies(self, amount):
+        self.current_zombie_count += amount
+        self.state = State.BATTLE
+        print(
+            Fore.RED
+            + f"{amount} Zombies have appeared. Use 'attack' to fight or 'run' to run away."
+            + Style.RESET_ALL
+        )
+

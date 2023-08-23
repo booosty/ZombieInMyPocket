@@ -157,6 +157,18 @@ class Commands(cmd.Cmd):
                 + Style.RESET_ALL
             )
 
+    def do_get_inventory(self, line):
+        """
+        Displays items that you currently hold in inventory and charges left.
+        """
+        if self.game.state != State.STOPPED:
+            self.game.player.get_items()
+        else:
+            print(
+                Fore.RED
+                + "You can't currently use this command at the moment"
+                + Style.RESET_ALL
+            )
     @staticmethod
     def do_exit(self):
         """

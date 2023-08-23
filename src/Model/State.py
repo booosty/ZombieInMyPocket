@@ -8,5 +8,6 @@ class State(Enum):
     MOVING = 4
     DRAWING = 5
     COWERING = 6
-    LOST = 6
-    WON = 7
+    BATTLE = 7
+    LOST = 8
+    WON = 9

@@ -49,9 +49,9 @@ class GameData:
         for card in json_data:
             data = dict(card)
             item = data["item"]
-            nine_effect = data["effect"]["nine"]
-            ten_effect = data["effect"]["ten"]
-            eleven_effect = data["effect"]["eleven"]
+            nine_effect = data["effect"]["9"]
+            ten_effect = data["effect"]["10"]
+            eleven_effect = data["effect"]["11"]
 
             dev_card = DevCard(
                 item,
@@ -61,6 +61,9 @@ class GameData:
                 ten_effect["action"],
                 eleven_effect["message"],
                 eleven_effect["action"],
+                nine_effect["action_amount"],
+                ten_effect["action_amount"],
+                eleven_effect["action_amount"],
             )
 
             self.dev_cards.append(dev_card)

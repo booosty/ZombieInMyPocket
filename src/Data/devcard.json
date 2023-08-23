@@ -3,17 +3,20 @@
     "id": 0,
     "item": "Oil",
     "effect": {
-      "nine": {
+      "9": {
         "message": "You try hard not to wet yourself",
-        "action": false
+        "action": false,
+        "action_amount": 0
       },
-      "ten": {
+      "10": {
         "message": false,
-        "action": "add_item"
+        "action": "add_item",
+        "action_amount": 0
       },
-      "eleven": {
+      "11": {
         "message": false,
-        "action": "add_zombies(6)"
+        "action": "add_zombies",
+        "action_amount": 6
       }
     }
   },
@@ -21,17 +24,20 @@
     "id": 1,
     "item": "Gasoline",
     "effect": {
-      "nine": {
+      "9": {
         "message": false,
-        "action": "add_zombies(4)"
+        "action": "add_zombies",
+        "action_amount": 4
       },
-      "ten": {
+      "10": {
         "message": "You sense your impending doom.",
-        "action": "set_health(-1)"
+        "action": "set_health",
+        "action_amount": -1
       },
-      "eleven": {
+      "11": {
         "message": false,
-        "action": "add_item"
+        "action": "add_item",
+        "action_amount": 0
       }
     }
   },
@@ -39,17 +45,20 @@
     "id": 2,
     "item": "Board with Nails",
     "effect": {
-      "nine": {
+      "9": {
         "message": false,
-        "action": "add_item"
+        "action": "add_item",
+        "action_amount": 0
       },
-      "ten": {
+      "10": {
         "message": false,
-        "action": "add_zombies(4)"
+        "action": "add_zombies",
+        "action_amount": 4
       },
-      "eleven": {
+      "11": {
         "message": "Something icky in your mouth.",
-        "action": "set_health(-1)"
+        "action": "set_health",
+        "action_amount": -1
       }
     }
   },
@@ -57,17 +66,20 @@
     "id": 3,
     "item": "Machete",
     "effect": {
-      "nine": {
+      "9": {
         "message": false,
-        "action": "add_zombies(4)"
+        "action": "add_zombies",
+        "action_amount": 4
       },
-      "ten": {
+      "10": {
         "message": "A bat poops in your eye.",
-        "action": "set_health(-1)"
+        "action": "set_health",
+        "action_amount": -1
       },
-      "eleven": {
+      "11": {
         "message": false,
-        "action": "add_zombies(6)"
+        "action": "add_zombies",
+        "action_amount": 6
       }
     }
   },
@@ -75,17 +87,20 @@
     "id": 4,
     "item": "Grisly Femur",
     "effect": {
-      "nine": {
+      "9": {
         "message": false,
-        "action": "add_item"
+        "action": "add_item",
+        "action_amount": 0
       },
-      "ten": {
+      "10": {
         "message": false,
-        "action": "add_zombies(5)"
+        "action": "add_zombies",
+        "action_amount": 5
       },
-      "eleven": {
+      "11": {
         "message": "Your soul isn't wanted here.",
-        "action": "set_health(-1)"
+        "action": "set_health",
+        "action_amount": -1
       }
     }
   },
@@ -93,17 +108,20 @@
     "id": 5,
     "item": "Golf Club",
     "effect": {
-      "nine": {
+      "9": {
         "message": "Slip on nasty goo.",
-        "action": "set_health(-1)"
+        "action": "set_health",
+        "action_amount": -1
       },
-      "ten": {
+      "10": {
         "message": false,
-        "action": "add_zombies(4)"
+        "action": "add_zombies",
+        "action_amount": 4
       },
-      "eleven": {
+      "11": {
         "message": "The smell of blood is in the air.",
-        "action": false
+        "action": false,
+        "action_amount": 0
       }
     }
   },
@@ -111,17 +129,20 @@
     "id": 6,
     "item": "Chainsaw",
     "effect": {
-      "nine": {
+      "9": {
         "message": false,
-        "action": "add_zombies(3)"
+        "action": "add_zombies",
+        "action_amount": 3
       },
-      "ten": {
+      "10": {
         "message": "You hear terrible screams",
-        "action": false
+        "action": false,
+        "action_amount": 0
       },
-      "eleven": {
+      "11": {
         "message": false,
-        "action": "add_zombies(5)"
+        "action": "add_zombies",
+        "action_amount": 5
       }
     }
   },
@@ -129,17 +150,20 @@
     "id": 7,
     "item": "Can of Soda",
     "effect": {
-      "nine": {
+      "9": {
         "message": "Candy bay in your pocket.",
-        "action": "set_health(1)"
+        "action": "set_health",
+        "action_amount": 1
       },
-      "ten": {
+      "10": {
         "message": false,
-        "action": "add_item"
+        "action": "add_item",
+        "action_amount": 0
       },
-      "eleven": {
+      "11": {
         "message": false,
-        "action": "add_zombies(4)"
+        "action": "add_zombies",
+        "action_amount": 4
       }
     }
   },
@@ -147,17 +171,20 @@
     "id": 8,
     "item": "Candle",
     "effect": {
-      "nine": {
+      "9": {
         "message": "Your body shivers involuntarily.",
-        "action": false
+        "action": false,
+        "action_amount": 0
       },
-      "ten": {
+      "10": {
         "message": "You feel a spark of hope.",
-        "action": "set_health(1)"
+        "action": "set_health",
+        "action_amount": 1
       },
-      "eleven": {
+      "11": {
         "message": false,
-        "action": "add_zombies(4)"
+        "action": "add_zombies",
+        "action_amount": 4
       }
     }
   }

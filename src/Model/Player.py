@@ -1,5 +1,11 @@
+from colorama import Fore, Style
+
+from Model.State import State
+
+
 class Player:
-    def __init__(self, game_data):
+    def __init__(self, game_data, game):
+        self.game = game
         self.game_data = game_data
         self.health = 6
         self.attack = 1
@@ -7,11 +13,62 @@ class Player:
         self.y = 8
         self.items = []
         self.hold_totem = False
-        self.can_cower = False
-        self.can_attack = False
 
-    def add_item(self, item, charges) -> None:
-        self.items.append([item, charges])
+    def set_health(self, amount):
+        verb = ""
+        self.health += amount
+
+        if amount > 0:
+            verb = "gain"
+        else:
+            verb = "lose"
+
+        print(
+            Fore.MAGENTA
+            + f"You {verb} 1 health!, you now have {self.health} health."
+            + Style.RESET_ALL
+        )
+
+        if self.health <= 0:
+            self.game.state = State.LOST
+            print(
+                Fore.RED
+                + "Sorry you have run out of health! You loose."
+                + Style.RESET_ALL
+            )
+            exit()
+
+    def add_item(self, item) -> None:
+        if len(self.items) > 2:
+            print(
+                Fore.RED
+                + f"You already have 2 items, you cannot carry anymore."
+                + Style.RESET_ALL
+            )
+            return
+        for items in self.game_data.items:
+            if items.name == item:
+                print(
+                    Fore.CYAN
+                    + f"{items.name} with {items.uses} has been added to your inventory."
+                    + Style.RESET_ALL
+                )
+                self.items.append([items.name, items.uses])
+
+    def get_items(self):
+        print(
+            Fore.YELLOW
+            + f"Your inventory:"
+            + Style.RESET_ALL
+        )
+        for index, item in enumerate(self.items):
+            print(
+                Fore.CYAN
+                + f"[{index}] - {item[0]} with {item[1]} uses left."
+                + Style.RESET_ALL
+            )
+
+
 
     def delete_item(self, item="") -> None:
         if item == "":
