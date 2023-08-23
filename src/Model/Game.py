@@ -11,7 +11,6 @@ class Game:
         self.game_data = GameData()
         self.player = Player(self.game_data)
         self.image_handler = ImageHandler()
-        self.current_direction = Direction.NORTH
         self.current_zombie_count = 0
         self.state = State.STOPPED
         self.time = 0
@@ -26,6 +25,7 @@ class Game:
         print("-" * 100)
         self.time = 9
         self.game_data.shuffle_devcard_deck()
+        self.game_data.shuffle_tiles_deck()
         self.game_data.remove_two_devcards()
         self.game_data.map[self.player.y][
             self.player.x
@@ -46,12 +46,66 @@ class Game:
                 state_message = (
                     "You can move direction by typing move_n, move_e, move_s, move_w"
                 )
+            case State.ROTATING:
+                state = "Rotating"
+                state_message = (
+                    "Type 'rotate' to rotate the tile until a door matches the current tile. Then type "
+                    "'place' to place the tile."
+                )
+            case State.DRAWING:
+                state = "Draw Card"
+                state_message = "Type 'draw' to draw a random card."
 
         print(
             f"Your current tile is {current_tile.name}, current doors available are: {current_doors}"
         )
         print(f"Your current state is: {state}")
         print(state_message)
+
+    def move_player(self, direction):
+        current_tile = self.get_current_tile()
+        next_tile = None
+
+        if current_tile.room_type == "Indoor":
+            next_tile = self.game_data.indoor_tiles[0]
+        else:
+            next_tile = self.game_data.outdoor_tiles[0]
+
+        match direction:
+            case Direction.NORTH:
+                self.player.y -= 1
+                self.game_data.map[self.player.y][self.player.x] = next_tile
+
+            case Direction.SOUTH:
+                self.player.y += 1
+                self.game_data.map[self.player.y][self.player.x] = next_tile
+
+            case Direction.EAST:
+                self.player.x += 1
+                self.game_data.map[self.player.y][self.player.x] = next_tile
+
+            case Direction.WEST:
+                self.player.x -= 1
+                self.game_data.map[self.player.y][self.player.x] = next_tile
+
+        self.state = State.ROTATING
+        self.image_handler.create_map_image(self.game_data.map)
+        self.get_game_status()
+
+    def rotate_tile(self):
+        current_tile = self.get_current_tile()
+        if current_tile.rotate_factor == 3:
+            current_tile.rotate_factor = 0
+        else:
+            current_tile.rotate_factor += 1
+
+        temp = current_tile.door_w
+        current_tile.door_w = current_tile.door_s
+        current_tile.door_s = current_tile.door_e
+        current_tile.door_e = current_tile.door_n
+        current_tile.door_n = temp
+
+        self.image_handler.create_map_image(self.game_data.map)
 
     def get_current_tile(self):
         return self.game_data.map[self.player.y][self.player.x]

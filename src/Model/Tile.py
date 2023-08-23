@@ -4,6 +4,7 @@ class Tile:
         self.action = action
         self.room_type = room_type
         self.img_src = src
+        self.rotate_factor = 0
         self.door_n = door_n
         self.door_e = door_e
         self.door_s = door_s

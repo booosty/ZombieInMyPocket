@@ -1,3 +1,4 @@
+import PIL.Image
 from PIL import Image, ImageOps
 from pathlib import Path
 
@@ -26,7 +27,20 @@ class ImageHandler:
                     new_image = Image.open(
                         str(self.root_dir) + "\\" + map[row][col].img_src
                     )
-                    new_image = ImageOps.fit(new_image, self.size, Image.ANTIALIAS)
+                    rotated_image = None
+
+                    match map[row][col].rotate_factor:
+                        case 0:
+                            rotated_image = new_image
+                        case 1:
+                            rotated_image = new_image.rotate(270)
+                        case 2:
+                            rotated_image = new_image.rotate(180)
+                        case 3:
+                            rotated_image = new_image.rotate(90)
+
+                    new_image = ImageOps.fit(rotated_image, self.size, Image.ANTIALIAS)
+
                     map_image.paste(new_image, offset)
 
         map_image.save(Path(__file__).parent.parent / "generated.png", "PNG")

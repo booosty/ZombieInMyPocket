@@ -102,6 +102,10 @@ class GameData:
     def shuffle_devcard_deck(self):
         random.shuffle(self.dev_cards)
 
+    def shuffle_tiles_deck(self):
+        random.shuffle(self.indoor_tiles)
+        random.shuffle(self.outdoor_tiles)
+
     def shuffle_tile_cards(self):
         random.shuffle(self.indoor_tiles)
         random.shuffle(self.outdoor_tiles)
