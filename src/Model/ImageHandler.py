@@ -1,5 +1,5 @@
 import PIL.Image
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageDraw
 from pathlib import Path
 
 
@@ -8,7 +8,7 @@ class ImageHandler:
         self.size = (150, 150)
         self.root_dir = Path(__file__).parent.parent / "Data" / "Images"
 
-    def create_map_image(self, map, grid=(9, 9)):
+    def create_map_image(self, game_map, player, grid=(9, 9)):
         width, height = self.size
 
         image_size = (width * grid[1], height * grid[0])
@@ -17,7 +17,7 @@ class ImageHandler:
         for row in range(grid[0]):
             for col in range(grid[1]):
                 offset = width * col, height * row
-                if map[row][col] == 0:
+                if game_map[row][col] == 0:
                     new_image = Image.open(str(self.root_dir) + "\\blank.png")
 
                     new_image = ImageOps.fit(new_image, self.size, Image.ANTIALIAS)
@@ -25,11 +25,12 @@ class ImageHandler:
                     map_image.paste(new_image, offset)
                 else:
                     new_image = Image.open(
-                        str(self.root_dir) + "\\" + map[row][col].img_src
+                        str(self.root_dir) + "\\" + game_map[row][col].img_src
                     )
+
                     rotated_image = None
 
-                    match map[row][col].rotate_factor:
+                    match game_map[row][col].rotate_factor:
                         case 0:
                             rotated_image = new_image
                         case 1:

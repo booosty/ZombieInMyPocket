@@ -1,12 +1,8 @@
-from Model.DevCard import DevCard
 from Model.Direction import Direction
 from Model.GameData import GameData
 from Model.ImageHandler import ImageHandler
 from Model.Player import Player
 from Model.State import State
-
-import webbrowser
-import os
 
 
 class Game:
@@ -35,12 +31,16 @@ class Game:
             self.player.x
         ] = self.game_data.get_tile_by_name("Foyer")
         self.game_data.remove_tile_from_deck_by_name("Foyer")
-        self.image_handler.create_map_image(self.game_data.map)
+        self.image_handler.create_map_image(self.game_data.map, self.player)
         self.state = State.MOVING
 
     def get_game_status(self):
         current_tile = self.get_current_tile()
         current_doors = self.get_doors_string(current_tile)
+
+        if self.time == 12:
+            print("Sorry time has run out for you! You loose.")
+            exit()
 
         state = ""
         state_message = ""
@@ -128,7 +128,7 @@ class Game:
         else:
             self.state = State.MOVING
 
-        self.image_handler.create_map_image(self.game_data.map)
+        self.image_handler.create_map_image(self.game_data.map, self.player)
         self.get_game_status()
 
     def check_tile_action(self, tile):
@@ -160,7 +160,7 @@ class Game:
         current_tile.door_e = current_tile.door_n
         current_tile.door_n = temp
 
-        self.image_handler.create_map_image(self.game_data.map)
+        self.image_handler.create_map_image(self.game_data.map, self.player)
 
     def place_tile(self):
         current_tile = self.get_current_tile()
