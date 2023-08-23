@@ -10,7 +10,7 @@ class Commands(cmd.Cmd):
 
     def __init__(self):
         cmd.Cmd.__init__(self)
-        self.prompt = ">>"
+        self.prompt = ">> "
         self.game = Game()
 
     def do_start(self, line):
@@ -152,6 +152,13 @@ class Commands(cmd.Cmd):
             Fore.GREEN + "Thank you for playing Zombies in my Pocket!" + Style.RESET_ALL
         )
         return True
+
+    def do_restart(self, line):
+        print(Fore.RED + "Restarting game..." + Style.RESET_ALL)
+        del self.game
+        self.game = Game()
+        self.game.create_game()
+        self.game.get_game_status()
 
     def do_get_status(self, line):
         """

@@ -91,13 +91,15 @@ class GameData:
                 return tile
 
     def remove_tile_from_deck_by_name(self, name):
-        for index, tile in enumerate(self.indoor_tiles):
-            if tile.name == name:
-                self.indoor_tiles.pop(index)
+        if len(self.indoor_tiles) > 0:
+            for index, tile in enumerate(self.indoor_tiles):
+                if tile.name == name:
+                    self.indoor_tiles.pop(index)
 
-        for index, tile in enumerate(self.outdoor_tiles):
-            if tile.name == name:
-                self.indoor_tiles.pop(index)
+        if len(self.outdoor_tiles) > 0:
+            for index, tile in enumerate(self.outdoor_tiles):
+                if tile.name == name:
+                    self.outdoor_tiles.pop(index)
 
     # Junho
     def shuffle_devcard_deck(self):

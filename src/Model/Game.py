@@ -76,13 +76,26 @@ class Game:
 
     def move_player(self, direction):
         current_tile = self.get_current_tile()
+        place_patio = False
         next_tile = None
         next_location = None
 
         if current_tile.room_type == "Indoor":
-            next_tile = self.game_data.indoor_tiles[0]
+            if len(self.game_data.indoor_tiles) > 0:
+                next_tile = self.game_data.indoor_tiles[0]
+            else:
+                print(Fore.RED + "There are no more indoor tiles" + Style.RESET_ALL)
+                print(
+                    Fore.CYAN
+                    + "Your next tile placed will move you outside to the Patio"
+                    + Style.RESET_ALL
+                )
+                place_patio = True
         else:
-            next_tile = self.game_data.outdoor_tiles[0]
+            if len(self.game_data.outdoor_tiles) > 0:
+                next_tile = self.game_data.outdoor_tiles[0]
+            else:
+                print(Fore.RED + "There are no more outdoor tiles" + Style.RESET_ALL)
 
         self.game_data.prev_tile = current_tile
 
@@ -124,6 +137,15 @@ class Game:
                     return
 
         if next_location == 0:
+            if place_patio:
+                patio = [
+                    tile
+                    for tile in self.game_data.outdoor_tiles
+                    if tile.name == "Patio"
+                ]
+                print(patio[0])
+                next_tile = patio[0]
+
             self.game_data.map[self.player.y][self.player.x] = next_tile
             self.state = State.ROTATING
 
