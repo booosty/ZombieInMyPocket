@@ -271,13 +271,13 @@ class Game:
         if current_tile.name == "Evil Temple":
             if self.devcard_draw_count != 2:
                 print(Fore.RED + "You must draw at least 2 dev cards to obtain the totem." + Style.RESET_ALL)
-                return
-            self.player.hold_totem = True
-            print(
-                Fore.MAGENTA
-                + "You have found the totem and quickly grab it, now go and bury it in the graveyard!"
-                + Style.RESET_ALL
-            )
+            else:
+                self.player.hold_totem = True
+                print(
+                    Fore.MAGENTA
+                    + "You have found the totem and quickly grab it, now go and bury it in the graveyard!"
+                    + Style.RESET_ALL
+                )
         else:
             print(
                 Fore.CYAN + "Nope, nothing to be found around here!" + Style.RESET_ALL
@@ -289,6 +289,8 @@ class Game:
             self.state = State.WON
         elif not self.player.hold_totem:
             print(Fore.RED + "You do not currently hold the totem" + Style.RESET_ALL)
+        elif self.devcard_draw_count != 2:
+            print(Fore.RED + "You must draw at least 2 dev cards to bury the totem." + Style.RESET_ALL)
         else:
             print(Fore.RED + "You are not currently at the Graveyard" + Style.RESET_ALL)
         self.get_game_status()
