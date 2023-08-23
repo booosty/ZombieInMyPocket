@@ -43,6 +43,14 @@ class Player:
             )
             exit()
 
+    def add_attack(self, amount):
+        self.attack += amount
+        print(
+            Fore.MAGENTA
+            + f"You have increased your attac!, you now have {self.attack} attack."
+            + Style.RESET_ALL
+        )
+
     def add_item(self, item) -> None:
         if len(self.items) > 2:
             print(
@@ -69,7 +77,7 @@ class Player:
         for index, item in enumerate(self.items):
             print(
                 Fore.CYAN
-                + f"[{index}] - {item[0]} with {item[1]} uses left."
+                + f"[{index + 1}] - {item[0]} with {item[1]} uses left."
                 + Style.RESET_ALL
             )
 
@@ -113,3 +121,61 @@ class Player:
         self.game.current_zombie_count = 0
         self.game.state = State.MOVING
         self.game.get_game_status()
+
+    def kill_all_zombies(self, item):
+        print(
+            Fore.CYAN
+            + f"You used your {item} and killed all the zombies!"
+            + Style.RESET_ALL
+        )
+        self.game.current_zombie_count = 0
+        self.game.state = State.MOVING
+        self.game.get_game_status()
+
+    def use_item(self, index):
+        index_num = int(index)
+        if index_num > 2:
+            print(
+                Fore.RED
+                + f"Error: Invalid Index"
+                + Style.RESET_ALL
+            )
+            return
+
+        item_name = self.items[index_num - 1][0]
+        item_uses = self.items[index_num - 1][1]
+
+        for item in self.game_data.items:
+            if item_name == item.name:
+                match item.action:
+                    case "negate_damage":
+                        print("Negate damage.")
+                    case "add_attack":
+                        self.add_attack(item.action_amount)
+                    case "add_health":
+                        self.set_health(item.action_amount)
+                    case "kill_all_zombies":
+                        self.kill_all_zombies(item.name)
+                    case False:
+                        print(
+                            Fore.RED
+                            + f"Item cannot be used"
+                            + Style.RESET_ALL
+                         )
+                        return
+
+        if item_uses == 1:
+            self.delete_item(item_name)
+            print(
+                Fore.RED
+                + f"You have used all charges of {item_name}"
+                + Style.RESET_ALL
+            )
+        else:
+            print(
+                Fore.YELLOW
+                + f"You have used 1 charge of {item_name}"
+                + Style.RESET_ALL
+            )
+            self.items[index_num - 1][1] -= 1
+

@@ -80,6 +80,7 @@ class GameData:
                 data["combinable"],
                 data["combines-with"],
                 data["makes"],
+                data["action_amount"]
             )
 
             self.items.append(new_item)

@@ -83,6 +83,7 @@ class Game:
                 )
             case State.BATTLE:
                 state += "Battle"
+                state_message += "Use 'attack' to fight or 'run' to run away."
 
         state += Style.RESET_ALL
         state_message += Style.RESET_ALL
@@ -349,7 +350,7 @@ class Game:
 
         print(
             Fore.YELLOW
-            + "Drawing a dev card from the pile..."
+            + "Drawing a card from the pile..."
             + Style.RESET_ALL
         )
 
@@ -433,7 +434,7 @@ class Game:
         self.state = State.BATTLE
         print(
             Fore.RED
-            + f"{amount} Zombies have appeared. Use 'attack' to fight or 'run' to run away."
+            + f"{amount} Zombies have appeared."
             + Style.RESET_ALL
         )
 

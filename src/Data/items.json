@@ -3,6 +3,7 @@
     "id": 0,
     "name": "Oil",
     "action": "negate_damage",
+    "action_amount": 0,
     "uses": 1,
     "combinable": true,
     "combines-with": {
@@ -16,6 +17,7 @@
     "id": 1,
     "name": "Gasoline",
     "action": false,
+    "action_amount": 0,
     "uses": 1,
     "combinable": true,
     "combines-with": {
@@ -30,7 +32,8 @@
   {
     "id": 2,
     "name": "Board with Nails",
-    "action": "add_attack(1)",
+    "action": "add_attack",
+    "action_amount": 1,
     "uses": 1,
     "combinable": false,
     "combines-with": null,
@@ -39,7 +42,8 @@
   {
     "id": 3,
     "name": "Can of Soda",
-    "action": "add_health(2)",
+    "action": "add_health",
+    "action_amount": 2,
     "uses": 1,
     "combinable": false,
     "combines-with": null,
@@ -48,7 +52,8 @@
   {
     "id": 4,
     "name": "Grisly Femur",
-    "action": "add_attack(1)",
+    "action": "add_attack",
+    "action_amount": 1,
     "uses": 1,
     "combinable": false,
     "combines-with": null,
@@ -57,7 +62,8 @@
     {
     "id": 5,
     "name": "Candle",
-    "action": null,
+    "action": false,
+    "action_amount": 0,
     "uses": 1,
     "combinable": false,
     "combines-with": null,
@@ -66,7 +72,8 @@
   {
     "id": 6,
     "name": "Chainsaw",
-    "action": "add_attack(3)",
+    "action": "add_attack",
+    "action_amount": 3,
     "uses": 2,
     "combinable": false,
     "combines-with": null,
@@ -75,7 +82,8 @@
   {
     "id": 7,
     "name": "Machete",
-    "action": "add_attack(2)",
+    "action": "add_attack",
+    "action_amount": 2,
     "uses": 1,
     "combinable": false,
     "combines-with": null,
@@ -84,7 +92,8 @@
   {
     "id": 8,
     "name": "Oil with Candle",
-    "action": "kill_all_zombies()",
+    "action": "kill_all_zombies",
+    "action_amount": 0,
     "uses": 1,
     "combinable": false,
     "combines-with": null,
@@ -93,7 +102,8 @@
   {
     "id": 9,
     "name": "Gasoline with Candle",
-    "action": "kill_all_zombies()",
+    "action": "kill_all_zombies",
+    "action_amount": 0,
     "uses": 1,
     "combinable": false,
     "combines-with": null,
@@ -102,7 +112,8 @@
     {
     "id": 10,
     "name": "Totem",
-    "action": null,
+    "action": false,
+    "action_amount": 0,
     "uses": 1,
     "combinable": false,
     "combines-with": null,

@@ -133,6 +133,19 @@ class Commands(cmd.Cmd):
         else:
             print(Fore.RED + "You are not in the drawing or moving state" + Style.RESET_ALL)
 
+    def do_use_item(self, index):
+        """
+        Use item from inventory based on index e.g use_item 1
+        :param index:
+        :return:
+        """
+        if self.game.state != State.STOPPED:
+            self.game.player.use_item(index)
+        else:
+            print(
+                Fore.RED + "You can't currently use an item at the moment" + Style.RESET_ALL
+            )
+
     def do_search(self, line):
         """
         Searches the current tile to see if the Totem is around
