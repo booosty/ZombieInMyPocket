@@ -1,5 +1,5 @@
 import cmd
-
+from colorama import Fore, Style
 from Model.Direction import Direction
 from Model.Game import Game
 from Model.State import State
@@ -21,7 +21,11 @@ class Commands(cmd.Cmd):
             self.game.create_game()
             self.game.get_game_status()
         else:
-            print("You are already currently playing the game.")
+            print(
+                Fore.RED
+                + "You are already currently playing the game."
+                + Style.RESET_ALL
+            )
 
     def do_move_n(self, line):
         """
@@ -31,7 +35,11 @@ class Commands(cmd.Cmd):
         if self.game.state == State.MOVING:
             self.game.move_player(Direction.NORTH)
         else:
-            print("You are currently not in the moving state.")
+            print(
+                Fore.RED
+                + "You are currently not in the moving state."
+                + Style.RESET_ALL
+            )
 
     def do_move_e(self, line):
         """
@@ -41,7 +49,11 @@ class Commands(cmd.Cmd):
         if self.game.state == State.MOVING:
             self.game.move_player(Direction.EAST)
         else:
-            print("You are currently not in the moving state.")
+            print(
+                Fore.RED
+                + "You are currently not in the moving state."
+                + Style.RESET_ALL
+            )
 
     def do_move_s(self, line):
         """
@@ -51,7 +63,11 @@ class Commands(cmd.Cmd):
         if self.game.state == State.MOVING:
             self.game.move_player(Direction.SOUTH)
         else:
-            print("You are currently not in the moving state.")
+            print(
+                Fore.RED
+                + "You are currently not in the moving state."
+                + Style.RESET_ALL
+            )
 
     def do_move_w(self, line):
         """
@@ -61,7 +77,11 @@ class Commands(cmd.Cmd):
         if self.game.state == State.MOVING:
             self.game.move_player(Direction.WEST)
         else:
-            print("You are currently not in the moving state.")
+            print(
+                Fore.RED
+                + "You are currently not in the moving state."
+                + Style.RESET_ALL
+            )
 
     def do_rotate(self, line):
         """
@@ -71,7 +91,11 @@ class Commands(cmd.Cmd):
             self.game.rotate_tile()
             self.game.get_game_status()
         else:
-            print("You are currently not in the rotating state")
+            print(
+                Fore.RED
+                + "You are currently not in the rotating state"
+                + Style.RESET_ALL
+            )
 
     def do_place(self, line):
         """
@@ -80,7 +104,11 @@ class Commands(cmd.Cmd):
         if self.game.state == State.ROTATING:
             self.game.place_tile()
         else:
-            print("You are currently not in the rotating state")
+            print(
+                Fore.RED
+                + "You are currently not in the rotating state"
+                + Style.RESET_ALL
+            )
 
     def do_draw(self, line):
         """
@@ -89,7 +117,7 @@ class Commands(cmd.Cmd):
         if self.game.state == State.DRAWING:
             self.game.draw_devcard()
         else:
-            print("You are not in the drawing state")
+            print(Fore.RED + "You are not in the drawing state" + Style.RESET_ALL)
 
     def do_search(self, line):
         """
@@ -100,19 +128,29 @@ class Commands(cmd.Cmd):
             if current_tile.name == "Evil Temple":
                 self.game.player.hold_totem = True
                 print(
-                    "You have found the totem and quickly grab it, now go and bury it in the graveyard!"
+                    Fore.MAGENTA
+                    + "You have found the totem and quickly grab it, now go and bury it in the graveyard!"
+                    + Style.RESET_ALL
                 )
             else:
-                print("Nope, nothing to be found around here!")
+                print(
+                    Fore.CYAN
+                    + "Nope, nothing to be found around here!"
+                    + Style.RESET_ALL
+                )
         else:
-            print("You can't currently search at the moment")
+            print(
+                Fore.RED + "You can't currently search at the moment" + Style.RESET_ALL
+            )
 
     @staticmethod
     def do_exit(self):
         """
         Quit Zombies in my Pocket
         """
-        print("Thank you for playing Zombies in my Pocket!")
+        print(
+            Fore.GREEN + "Thank you for playing Zombies in my Pocket!" + Style.RESET_ALL
+        )
         return True
 
     def do_get_status(self, line):
@@ -123,5 +161,7 @@ class Commands(cmd.Cmd):
             self.game.get_player_stats()
         else:
             print(
-                "You are currently not playing a game, use 'start' to start a new game."
+                Fore.RED
+                + "You are currently not playing a game, use 'start' to start a new game."
+                + Style.RESET_ALL
             )

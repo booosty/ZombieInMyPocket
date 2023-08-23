@@ -3,6 +3,7 @@ from Model.GameData import GameData
 from Model.ImageHandler import ImageHandler
 from Model.Player import Player
 from Model.State import State
+from colorama import Fore, Style
 
 
 class Game:
@@ -16,13 +17,14 @@ class Game:
         self.time = 0
 
     def create_game(self):
+        print(Fore.YELLOW)
         print(
             "The dead walk the earth. You must search the house for the Evil Temple, and find the zombie totem."
         )
         print(
             "Then take the totem outside, and bury it in the Graveyard, all before the clock strikes midnight."
         )
-        print("-" * 100)
+        print(Style.RESET_ALL)
         self.time = 9
         self.game_data.shuffle_devcard_deck()
         self.game_data.shuffle_tiles_deck()
@@ -42,26 +44,32 @@ class Game:
             print("Sorry time has run out for you! You loose.")
             exit()
 
-        state = ""
-        state_message = ""
+        state = Fore.BLUE + ""
+        state_message = Fore.GREEN + ""
+        current_tile_name = Fore.BLUE + current_tile.name + Style.RESET_ALL
+        doors = Fore.CYAN + current_doors + Style.RESET_ALL
+
         match self.state:
             case State.MOVING:
-                state = "Moving"
-                state_message = (
+                state += "Moving"
+                state_message += (
                     "You can move direction by typing move_n, move_e, move_s, move_w"
                 )
             case State.ROTATING:
-                state = "Rotating"
-                state_message = (
+                state += "Rotating"
+                state_message += (
                     "Type 'rotate' to rotate the tile until a door matches the current tile. Then type "
                     "'place' to place the tile."
                 )
             case State.DRAWING:
-                state = "Draw Card"
-                state_message = "Type 'draw' to draw a random card."
+                state += "Draw Card"
+                state_message += "Type 'draw' to draw a random card."
+
+        state += Style.RESET_ALL
+        state_message += Style.RESET_ALL
 
         print(
-            f"Your current tile is {current_tile.name}, current doors available are: {current_doors}"
+            f"Your current tile is {current_tile_name}, current doors available are: {doors}"
         )
         print(f"Your current state is: {state}")
         print(state_message)
@@ -85,7 +93,7 @@ class Game:
                     self.player.y -= 1
                     next_location = self.game_data.map[self.player.y][self.player.x]
                 else:
-                    print("There is no path this way")
+                    print(Fore.RED + "There is no path this way" + Style.RESET_ALL)
                     return
 
             case Direction.SOUTH:
@@ -94,7 +102,7 @@ class Game:
                     self.player.y += 1
                     next_location = self.game_data.map[self.player.y][self.player.x]
                 else:
-                    print("There is no path this way")
+                    print(Fore.RED + "There is no path this way" + Style.RESET_ALL)
                     return
 
             case Direction.EAST:
@@ -103,7 +111,7 @@ class Game:
                     self.player.x += 1
                     next_location = self.game_data.map[self.player.y][self.player.x]
                 else:
-                    print("There is no path this way")
+                    print(Fore.RED + "There is no path this way" + Style.RESET_ALL)
                     return
 
             case Direction.WEST:
@@ -112,7 +120,7 @@ class Game:
                     self.player.x -= 1
                     next_location = self.game_data.map[self.player.y][self.player.x]
                 else:
-                    print("There is no path this way")
+                    print(Fore.RED + "There is no path this way" + Style.RESET_ALL)
                     return
 
         if next_location == 0:
@@ -120,8 +128,6 @@ class Game:
             self.state = State.ROTATING
 
             if next_tile.action:
-                print("Action")
-                print(next_tile.action)
                 self.check_tile_action(next_tile)
 
             self.game_data.remove_tile_from_deck_by_name(next_tile.name)
@@ -134,18 +140,26 @@ class Game:
     def check_tile_action(self, tile):
         if tile.action == "add_health":
             self.player.health += 1
-            print(f"You gain 1 health!, you now have {self.player.health} health.")
+            print(
+                Fore.MAGENTA
+                + f"You gain 1 health!, you now have {self.player.health} health."
+                + Style.RESET_ALL
+            )
 
         if tile.action == "find_item":
             # TODO
-            print("TODO: You have found an item!")
+            print(Fore.MAGENTA + "TODO: You have found an item!" + Style.RESET_ALL)
 
         if tile.action == "find_totem":
-            print("The totem must be around here somewhere, type 'search' to find it!")
+            print(
+                Fore.MAGENTA
+                + "The totem must be around here somewhere, type 'search' to find it!"
+                + Style.RESET_ALL
+            )
 
         if tile.action == "bury_item":
             # TODO
-            print("TODO: Bury item")
+            print(Fore.MAGENTA + "TODO: Bury item" + Style.RESET_ALL)
 
     def rotate_tile(self):
         current_tile = self.get_current_tile()
@@ -183,7 +197,9 @@ class Game:
             self.get_game_status()
         else:
             print(
-                "Sorry the doors to not match up, try rotating and matching the doors."
+                Fore.RED
+                + "Sorry the doors to not match up, try rotating and matching the doors."
+                + Style.RESET_ALL
             )
 
     def get_current_tile(self):
@@ -217,8 +233,12 @@ class Game:
             self.game_data.import_dev_cards()
             self.game_data.shuffle_devcard_deck()
             self.game_data.remove_two_devcards()
-            print(f"You have drawn all the cards available. Resetting deck.")
-            print(f"It is now {self.time} pm")
+            print(
+                Fore.CYAN
+                + "You have drawn all the cards available. Resetting deck."
+                + Style.RESET_ALL
+            )
+            print(Fore.GREEN + "It is now {self.time} pm" + Style.RESET_ALL)
 
         drawn_card = self.game_data.dev_cards.pop(0)
         self.state = State.MOVING
