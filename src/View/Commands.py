@@ -74,6 +74,16 @@ class Commands(cmd.Cmd):
         else:
             print("You are currently not in the rotating state")
 
+    def do_place(self, line):
+        """
+        Places tile at current location and rotation
+        :return:
+        """
+        if self.game.state == State.ROTATING:
+            self.game.place_tile()
+        else:
+            print("You are currently not in the rotating state")
+
     @staticmethod
     def do_exit(self):
         """

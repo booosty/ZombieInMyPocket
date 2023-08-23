@@ -10,6 +10,7 @@ class Game:
     def __init__(self):
         self.game_data = GameData()
         self.player = Player(self.game_data)
+        self.current_direction = None
         self.image_handler = ImageHandler()
         self.current_zombie_count = 0
         self.state = State.STOPPED
@@ -71,22 +72,32 @@ class Game:
         else:
             next_tile = self.game_data.outdoor_tiles[0]
 
+        self.game_data.prev_tile = current_tile
+
         match direction:
             case Direction.NORTH:
+                self.current_direction = Direction.NORTH
                 self.player.y -= 1
                 self.game_data.map[self.player.y][self.player.x] = next_tile
 
             case Direction.SOUTH:
+                self.current_direction = Direction.SOUTH
                 self.player.y += 1
                 self.game_data.map[self.player.y][self.player.x] = next_tile
 
             case Direction.EAST:
+                self.current_direction = Direction.EAST
                 self.player.x += 1
                 self.game_data.map[self.player.y][self.player.x] = next_tile
 
             case Direction.WEST:
+                self.current_direction = Direction.WEST
                 self.player.x -= 1
                 self.game_data.map[self.player.y][self.player.x] = next_tile
+
+        # TODO: actions
+        if current_tile.action:
+            print(current_tile.action)
 
         self.state = State.ROTATING
         self.image_handler.create_map_image(self.game_data.map)
@@ -106,6 +117,30 @@ class Game:
         current_tile.door_n = temp
 
         self.image_handler.create_map_image(self.game_data.map)
+
+    def place_tile(self):
+        current_tile = self.get_current_tile()
+
+        match self.current_direction:
+            case Direction.NORTH:
+                if current_tile.door_s:
+                    self.state = State.DRAWING
+            case Direction.EAST:
+                if current_tile.door_w:
+                    self.state = State.DRAWING
+            case Direction.SOUTH:
+                if current_tile.door_n:
+                    self.state = State.DRAWING
+            case Direction.WEST:
+                if current_tile.door_e:
+                    self.state = State.DRAWING
+
+        if self.state == State.DRAWING:
+            self.get_game_status()
+        else:
+            print(
+                "Sorry the doors to not match up, try rotating and matching the doors."
+            )
 
     def get_current_tile(self):
         return self.game_data.map[self.player.y][self.player.x]

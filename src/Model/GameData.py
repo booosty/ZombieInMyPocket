@@ -9,6 +9,7 @@ from Model.Tile import Tile
 class GameData:
     def __init__(self):
         self.map = [[0] * 9 for i in range(9)]
+        self.prev_tile = None
         self.indoor_tiles = []
         self.outdoor_tiles = []
         self.dev_cards = []
