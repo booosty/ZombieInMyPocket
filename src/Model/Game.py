@@ -14,7 +14,6 @@ class Game:
         self.image_handler = ImageHandler()
         self.current_zombie_count = 0
         self.state = State.STOPPED
-        self.has_won = True
         self.time = 0
 
     def create_game(self):
@@ -49,7 +48,7 @@ class Game:
             )
             exit()
 
-        if self.has_won:
+        if self.state == State.WON:
             print(
                 Fore.GREEN + "Congratulations you have won the game!" + Style.RESET_ALL
             )
@@ -255,7 +254,7 @@ class Game:
     def bury_totem(self):
         current_tile = self.get_current_tile()
         if current_tile.name == "Graveyard" and self.player.hold_totem:
-            self.has_won = True
+            self.state = State.WON
         elif not self.player.hold_totem:
             print(Fore.RED + "You do not currently hold the totem" + Style.RESET_ALL)
         else:

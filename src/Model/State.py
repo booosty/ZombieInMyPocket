@@ -7,3 +7,5 @@ class State(Enum):
     ROTATING = 3
     MOVING = 4
     DRAWING = 5
+    LOST = 6
+    WON = 7
