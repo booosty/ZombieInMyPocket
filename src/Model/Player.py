@@ -112,5 +112,4 @@ class Player:
         )
         self.game.current_zombie_count = 0
         self.game.state = State.MOVING
-        self.game.run_from_zombies = True
         self.game.get_game_status()

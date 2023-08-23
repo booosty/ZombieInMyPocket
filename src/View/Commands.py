@@ -33,7 +33,7 @@ class Commands(cmd.Cmd):
         :return:
         """
         if self.game.state == State.MOVING:
-            self.game.move_player(Direction.NORTH, self.game.run_from_zombies)
+            self.game.move_player(Direction.NORTH)
         else:
             print(
                 Fore.RED
@@ -47,7 +47,7 @@ class Commands(cmd.Cmd):
         :return:
         """
         if self.game.state == State.MOVING:
-            self.game.move_player(Direction.EAST, self.game.run_from_zombies)
+            self.game.move_player(Direction.EAST)
         else:
             print(
                 Fore.RED
@@ -61,7 +61,7 @@ class Commands(cmd.Cmd):
         :return:
         """
         if self.game.state == State.MOVING:
-            self.game.move_player(Direction.SOUTH, self.game.run_from_zombies)
+            self.game.move_player(Direction.SOUTH)
         else:
             print(
                 Fore.RED
@@ -75,7 +75,7 @@ class Commands(cmd.Cmd):
         :return:
         """
         if self.game.state == State.MOVING:
-            self.game.move_player(Direction.WEST, self.game.run_from_zombies)
+            self.game.move_player(Direction.WEST)
         else:
             print(
                 Fore.RED

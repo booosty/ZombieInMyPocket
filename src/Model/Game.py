@@ -13,7 +13,6 @@ class Game:
         self.current_direction = None
         self.image_handler = ImageHandler()
         self.current_zombie_count = 0
-        self.run_from_zombies = False
         self.state = State.STOPPED
         self.time = 0
         self.devcard_draw_count = 0
@@ -94,15 +93,11 @@ class Game:
         print(f"Your current state is: {state}")
         print(state_message)
 
-    def move_player(self, direction, run_from_zombies=False):
+    def move_player(self, direction):
         current_tile = self.get_current_tile()
         place_patio = False
         next_tile = None
         next_location = None
-
-        if run_from_zombies:
-            print(Fore.RED + "You cannot go to a new tile after running. Please visit an old tile." + Style.RESET_ALL)
-            return
 
         if current_tile.room_type == "Indoor":
             if len(self.game_data.indoor_tiles) > 0:
@@ -181,7 +176,6 @@ class Game:
             self.state = State.MOVING
 
         self.devcard_draw_count = 0
-        self.run_from_zombies = False
         self.image_handler.create_map_image(self.game_data.map, self.player)
         self.get_game_status()
 
@@ -209,11 +203,6 @@ class Game:
     def check_tile_action(self, tile):
         if tile.action == "add_health":
             self.player.set_health(3)
-            print(
-                Fore.MAGENTA
-                + f"You gain 1 health!, you now have {self.player.health} health."
-                + Style.RESET_ALL
-            )
 
         if tile.action == "find_item":
             # TODO
@@ -227,8 +216,11 @@ class Game:
             )
 
         if tile.action == "bury_item":
-            # TODO
-            print(Fore.MAGENTA + "TODO: Bury item" + Style.RESET_ALL)
+            print(
+                Fore.MAGENTA
+                + "You made it to the graveyard, bury the totem if you have it!"
+                + Style.RESET_ALL
+            )
 
     def rotate_tile(self):
         current_tile = self.get_current_tile()
