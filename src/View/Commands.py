@@ -128,7 +128,7 @@ class Commands(cmd.Cmd):
         """
         Draws a new dev card from the pile
         """
-        if self.game.state != State.STOPPED or self.game.state != State.BATTLE:
+        if self.game.state != State.STOPPED and self.game.state != State.BATTLE:
             self.game.draw_devcard()
         else:
             print(Fore.RED + "You cannot currently draw a card." + Style.RESET_ALL)
@@ -150,7 +150,7 @@ class Commands(cmd.Cmd):
         """
         Searches the current tile to see if the Totem is around
         """
-        if self.game.state != State.STOPPED:
+        if self.game.state != State.STOPPED and self.game.state != State.BATTLE:
             self.game.search_tile()
         else:
             print(
@@ -161,7 +161,7 @@ class Commands(cmd.Cmd):
         """
         Bury the totem at the Graveyard
         """
-        if self.game.state != State.STOPPED:
+        if self.game.state != State.STOPPED and self.game.state != State.BATTLE:
             self.game.bury_totem()
         else:
             print(
@@ -220,6 +220,9 @@ class Commands(cmd.Cmd):
         return True
 
     def do_restart(self, line):
+        """
+        Restarts the current game. Does not save any progress.
+        """
         print(Fore.RED + "Restarting game..." + Style.RESET_ALL)
         del self.game
         self.game = Game()
