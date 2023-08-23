@@ -5,6 +5,9 @@ from Model.ImageHandler import ImageHandler
 from Model.Player import Player
 from Model.State import State
 
+import webbrowser
+import os
+
 
 class Game:
     def __init__(self):
@@ -131,9 +134,7 @@ class Game:
     def check_tile_action(self, tile):
         if tile.action == "add_health":
             self.player.health += 1
-            print(
-                f"You gain {tile.action_amount} health!, you now have {self.player.health} health."
-            )
+            print(f"You gain 1 health!, you now have {self.player.health} health.")
 
         if tile.action == "find_item":
             # TODO

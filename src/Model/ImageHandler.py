@@ -44,4 +44,3 @@ class ImageHandler:
                     map_image.paste(new_image, offset)
 
         map_image.save(Path(__file__).parent.parent / "generated.png", "PNG")
-        map_image.show()
