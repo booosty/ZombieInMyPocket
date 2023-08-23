@@ -47,7 +47,7 @@ class Player:
         self.attack += amount
         print(
             Fore.MAGENTA
-            + f"You have increased your attac!, you now have {self.attack} attack."
+            + f"You have increased your attack!, you now have {self.attack} attack."
             + Style.RESET_ALL
         )
 
@@ -91,16 +91,20 @@ class Player:
 
     def do_attack(self):
         zombies_left = self.game.current_zombie_count - self.attack
+
         print(
             Fore.YELLOW
             + f"You attack the zombies.."
             + Style.RESET_ALL
         )
-        self.set_health(-zombies_left)
-        if (self.attack - zombies_left) <= 0:
+
+        if zombies_left > 0:
+            self.set_health(-zombies_left)
+
+        if (self.game.current_zombie_count - self.attack) > 0:
             self.attack = 0
         else:
-            self.attack -= zombies_left
+            self.attack -= self.game.current_zombie_count
 
         print(
             Fore.RED
@@ -132,6 +136,10 @@ class Player:
         self.game.state = State.MOVING
         self.game.get_game_status()
 
+    def negate_damage(self):
+        self.game.current_zombie_count = 0
+        self.do_attack()
+
     def use_item(self, index):
         index_num = int(index)
         if index_num > 2:
@@ -149,7 +157,7 @@ class Player:
             if item_name == item.name:
                 match item.action:
                     case "negate_damage":
-                        print("Negate damage.")
+                        self.negate_damage()
                     case "add_attack":
                         self.add_attack(item.action_amount)
                     case "add_health":
