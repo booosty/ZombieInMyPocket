@@ -16,16 +16,21 @@ class Player:
 
     def set_health(self, amount):
         verb = ""
-        self.health += amount
+        damage = amount
 
-        if amount > 0:
+        if amount > 4:
+            damage = 4
+
+        self.health += damage
+
+        if damage > 0:
             verb = "gain"
         else:
             verb = "lose"
 
         print(
             Fore.MAGENTA
-            + f"You {verb} {amount} health!, you now have {self.health} health."
+            + f"You {verb} {damage} health!, you now have {self.health} health."
             + Style.RESET_ALL
         )
 
@@ -67,8 +72,6 @@ class Player:
                 + f"[{index}] - {item[0]} with {item[1]} uses left."
                 + Style.RESET_ALL
             )
-
-
 
     def delete_item(self, item="") -> None:
         if item == "":
