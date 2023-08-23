@@ -52,6 +52,7 @@ class Game:
             print(
                 Fore.GREEN + "Congratulations you have won the game!" + Style.RESET_ALL
             )
+            print("Sorry time has run out for you! You lose.")
             exit()
 
         state = Fore.BLUE + ""
@@ -63,7 +64,7 @@ class Game:
             case State.MOVING:
                 state += "Moving"
                 state_message += (
-                    "You can move direction by typing move_n, move_e, move_s, move_w"
+                    "You can move direction by typing move_n, move_e, move_s, move_w OR cower"
                 )
             case State.ROTATING:
                 state += "Rotating"
@@ -74,6 +75,12 @@ class Game:
             case State.DRAWING:
                 state += "Draw Card"
                 state_message += "Type 'draw' to draw a random card."
+
+            case State.COWERING:
+                state += "COWERING"
+                state_message += (
+                    "You are cowering in fear. You will stay in the current tile for this turn."
+                )
 
         state += Style.RESET_ALL
         state_message += Style.RESET_ALL
@@ -168,6 +175,22 @@ class Game:
 
         self.image_handler.create_map_image(self.game_data.map, self.player)
         self.get_game_status()
+
+    def cower(self):
+        if self.state == State.MOVING:
+            current_tile = self.get_current_tile()
+            self.state = State.COWERING
+            self.player.health += 3  # Gain 3 health
+            print(
+                Fore.MAGENTA
+                + "You cower in fear and gain 3 health. You are staying in the current tile for this turn."
+                + Style.RESET_ALL
+            )
+
+        else:
+            print(Fore.RED + "You can only cower when you are allowed to move." + Style.RESET_ALL)
+        self.state = State.MOVING
+        # Need to display the movement and the current state message here.
 
     def check_tile_action(self, tile):
         if tile.action == "add_health":
@@ -283,7 +306,7 @@ class Game:
 
     # Junho
     def draw_devcard(self):
-        if len(self.game_data.dev_cards) <= 1:
+        if len(self.game_data.dev_cards) < 1:
             # All Dev cards have been drawn, reset the deck and increment time
             self.time += 1
             self.game_data.import_dev_cards()
@@ -294,7 +317,7 @@ class Game:
                 + "You have drawn all the cards available. Resetting deck."
                 + Style.RESET_ALL
             )
-            print(Fore.GREEN + f"It is now {self.time} pm" + Style.RESET_ALL)
+            print(Fore.GREEN + "It is now {self.time} pm" + Style.RESET_ALL)
 
         drawn_card = self.game_data.dev_cards.pop(0)
         self.state = State.MOVING

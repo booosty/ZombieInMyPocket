@@ -82,6 +82,20 @@ class Commands(cmd.Cmd):
                 + "You are currently not in the moving state."
                 + Style.RESET_ALL
             )
+    def do_cower(self, line):
+        """
+        Player cowers in their current tile
+        Gains 3 Health
+        """
+        if self.game.state == State.MOVING:
+            self.game.cower()
+        else:
+            print(
+                Fore.RED
+                + "You can not cower right now"
+                + Style.RESET_ALL
+            )
+
 
     def do_rotate(self, line):
         """

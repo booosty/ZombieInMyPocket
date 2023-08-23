@@ -7,5 +7,5 @@
     <option name="pathToExecutable" value="C:\Users\William\anaconda3\Scripts\black.exe" />
     <option name="sdkUUID" value="3459800e-8071-4ecc-9af6-653988e8a4e8" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11 (src)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11" project-jdk-type="Python SDK" />
 </project>
