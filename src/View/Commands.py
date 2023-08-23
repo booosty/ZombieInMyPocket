@@ -128,10 +128,10 @@ class Commands(cmd.Cmd):
         """
         Draws a new dev card from the pile
         """
-        if self.game.state == State.DRAWING or State.MOVING:
+        if self.game.state != State.STOPPED or self.game.state != State.BATTLE:
             self.game.draw_devcard()
         else:
-            print(Fore.RED + "You are not in the drawing or moving state" + Style.RESET_ALL)
+            print(Fore.RED + "You cannot currently draw a card." + Style.RESET_ALL)
 
     def do_use_item(self, index):
         """
