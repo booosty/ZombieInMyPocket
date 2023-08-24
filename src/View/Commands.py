@@ -9,25 +9,29 @@ from Model.FileHandler import FileHandler
 class Commands(cmd.Cmd):
     intro = "Welcome to Zombies in my Pocket!"
 
+    # Junho & William
     def __init__(self, args=""):
         cmd.Cmd.__init__(self)
         self.prompt = ">> "
         self.game = Game()
         self.file_handler = FileHandler()
         self.args = args
+        self.command_methods = {
+            "start": self.do_start,
+            "help": self.do_help,
+            "exit": self.do_exit,
+        }
 
         if len(args) > 1:
             self.check_args(args)
 
+    # Junho & William
     def check_args(self, args):
         for command in args:
-            match command:
-                case "start":
-                    self.do_start(command)
-                case "help":
-                    self.do_help(command)
-                case "exit":
-                    self.do_exit(command)
+            if command in self.command_methods:
+                self.command_methods[command](command)
+            else:
+                print(f"Unknown command: {command}")
 
     def do_start(self, line):
         """
@@ -150,9 +154,10 @@ class Commands(cmd.Cmd):
         else:
             print(Fore.RED + "You cannot currently draw a card." + Style.RESET_ALL)
 
+    # Junho
     def do_use_item(self, index):
         """
-        Use item from inventory based on index e.g use_item 1
+        Use an item from the players inventory based on the index e.g. use_item 1
         :param index:
         :return:
         """
@@ -187,9 +192,10 @@ class Commands(cmd.Cmd):
                 + Style.RESET_ALL
             )
 
+    # Junho
     def do_attack(self, line):
         """
-        Attack zombies that have appeared.
+        Attacks zombies when they appear
         """
         if self.game.state == State.BATTLE:
             self.game.player.do_attack()
@@ -200,9 +206,11 @@ class Commands(cmd.Cmd):
                 + Style.RESET_ALL
             )
 
+    # Junho
     def do_run(self, line):
         """
-        Run away from a zombie attack - losing 1 health.
+        Run away from a zombie attack
+        You lose 1 health.
         """
         if self.game.state == State.BATTLE:
             self.game.player.do_run()
@@ -328,3 +336,19 @@ class Commands(cmd.Cmd):
 
         except Exception as e:
             print(Fore.RED + f"An error occurred while loading the game: {e}" + Style.RESET_ALL)
+
+    # Junho
+    def do_help_all(self, line):
+        """
+        Display all available commands and descriptions
+        """
+        all_commands = [
+            "start", "move_n", "move_e", "move_s", "move_w", "cower",
+            "rotate", "place", "draw", "use_item", "search", "bury",
+            "attack", "run", "get_inventory", "exit", "restart",
+            "get_status", "save", "load", "help_all"
+        ]
+        print("Available commands:")
+        for command in all_commands:
+            doc = getattr(self, f"do_{command}").__doc__
+            print(f"{command}: {doc}")
