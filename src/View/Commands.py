@@ -161,12 +161,15 @@ class Commands(cmd.Cmd):
         :param index:
         :return:
         """
-        if self.game.state != State.STOPPED:
-            self.game.player.use_item(index)
-        else:
-            print(
-                Fore.RED + "You can't currently use an item at the moment" + Style.RESET_ALL
-            )
+        try:
+            if self.game.state != State.STOPPED:
+                self.game.player.use_item(index)
+            else:
+                print(
+                    Fore.RED + "You can't currently use an item at the moment" + Style.RESET_ALL
+                )
+        except Exception as e:
+            print(Fore.RED + f"An error occurred while using the item, make sure you're entering a number: {e}" + Style.RESET_ALL)
 
     def do_search(self, line):
         """

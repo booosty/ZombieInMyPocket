@@ -198,7 +198,6 @@ class Game:
         else:
             print(Fore.RED + "You can only cower when you are allowed to move." + Style.RESET_ALL)
         self.state = State.MOVING
-        # Need to display the movement and the current state message here.
         self.get_game_status()
 
     def check_tile_action(self, tile):
