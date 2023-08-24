@@ -292,7 +292,6 @@ class Commands(cmd.Cmd):
                 + Style.RESET_ALL
             )
 
-
     # Junho
     def do_load(self, line):
         """
@@ -329,5 +328,3 @@ class Commands(cmd.Cmd):
 
         except Exception as e:
             print(Fore.RED + f"An error occurred while loading the game: {e}" + Style.RESET_ALL)
-
-

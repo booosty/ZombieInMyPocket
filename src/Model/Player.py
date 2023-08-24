@@ -4,6 +4,9 @@ from Model.State import State
 
 
 class Player:
+    """
+    The main player class of the game. Holds all vital player information.
+    """
     def __init__(self, game_data, game):
         self.game = game
         self.game_data = game_data
@@ -15,6 +18,11 @@ class Player:
         self.hold_totem = False
 
     def set_health(self, amount):
+        """
+        Increases or decreases player health based on amount
+        :param amount:
+        :return:
+        """
         verb = ""
         damage = amount
 
@@ -44,6 +52,11 @@ class Player:
             exit()
 
     def add_attack(self, amount):
+        """
+        Increases the players attack value
+        :param amount:
+        :return:
+        """
         self.attack += amount
         print(
             Fore.MAGENTA
@@ -52,6 +65,11 @@ class Player:
         )
 
     def add_item(self, item) -> None:
+        """
+        Add an item to the players inventory if they do not currently already hold 2 items.
+        :param item:
+        :return:
+        """
         if len(self.items) > 2:
             print(
                 Fore.RED
@@ -69,11 +87,21 @@ class Player:
                 self.items.append([items.name, items.uses])
 
     def get_items(self):
+        """
+        Print out a list of items that the player currently holds
+        :return:
+        """
         print(
             Fore.YELLOW
             + f"Your inventory:"
             + Style.RESET_ALL
         )
+        if len(self.items) == 0:
+            print(
+                Fore.CYAN
+                + f"You currently have no items."
+                + Style.RESET_ALL
+            )
         for index, item in enumerate(self.items):
             print(
                 Fore.CYAN
@@ -82,6 +110,11 @@ class Player:
             )
 
     def delete_item(self, item="") -> None:
+        """
+        Delete an item out of the users inventory if they hold it.
+        :param item:
+        :return:
+        """
         if item == "":
             raise Exception("Empty item cannot be deleted.")
 
@@ -90,6 +123,10 @@ class Player:
                 self.items.pop(self.items.index(items))
 
     def do_attack(self):
+        """
+        Attack zombies when they appear, cannot be used outside of battle.
+        :return:
+        """
         zombies_left = self.game.current_zombie_count - self.attack
 
         print(
@@ -116,6 +153,11 @@ class Player:
         self.game.get_game_status()
 
     def do_run(self):
+        """
+        Run away from zombies if they appear, losing 1 health.
+        Cannot be used outside of battle.
+        :return:
+        """
         self.set_health(-1)
         print(
             Fore.YELLOW
@@ -127,6 +169,11 @@ class Player:
         self.game.get_game_status()
 
     def kill_all_zombies(self, item):
+        """
+        Item effect that kills all zombies that have appeared.
+        :param item:
+        :return:
+        """
         print(
             Fore.CYAN
             + f"You used your {item} and killed all the zombies!"
@@ -137,10 +184,19 @@ class Player:
         self.game.get_game_status()
 
     def negate_damage(self):
+        """
+        Item effect that reduces the damage received to 0 when attacking
+        :return:
+        """
         self.game.current_zombie_count = 0
         self.do_attack()
 
     def use_item(self, index):
+        """
+        Use items effect from inventory based on index of item in inventory.
+        :param index:
+        :return:
+        """
         index_num = int(index)
         if index_num > 2 or index_num > len(self.items):
             print(
