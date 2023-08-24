@@ -99,6 +99,51 @@
     "south": false,
     "west": false
   },
+  {
+    "id": 9,
+    "name": "Kitchen",
+    "src": "kitchen.png",
+    "action": "add_health",
+    "action_amount": 1,
+    "type": "Indoor",
+    "north": true,
+    "east": true,
+    "south": false,
+    "west": true
+  },
+    {
+    "id": 10,
+    "name": "Storage",
+    "src": "storage.png",
+    "action": "find_item",
+    "type": "Indoor",
+    "north": true,
+    "east": false,
+    "south": false,
+    "west": false
+  },
+    {
+    "id": 11,
+    "name": "Evil Temple",
+    "src": "evil_temple.png",
+    "action": "find_totem",
+    "type": "Indoor",
+    "north": false,
+    "east": true,
+    "south": false,
+    "west": true
+  },
+    {
+    "id": 12,
+    "name": "Family Room",
+    "src": "family_room.png",
+    "action": null,
+    "type": "Indoor",
+    "north": true,
+    "east": true,
+    "south": false,
+    "west": true
+  },
     {
     "id": 13,
     "name": "Dining Room",
