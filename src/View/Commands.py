@@ -3,6 +3,7 @@ from colorama import Fore, Style
 from Model.Direction import Direction
 from Model.Game import Game
 from Model.State import State
+from Model.FileHandler import FileHandler
 
 
 class Commands(cmd.Cmd):
@@ -12,6 +13,7 @@ class Commands(cmd.Cmd):
         cmd.Cmd.__init__(self)
         self.prompt = ">> "
         self.game = Game()
+        self.file_handler = FileHandler()
 
     def do_start(self, line):
         """
@@ -242,3 +244,55 @@ class Commands(cmd.Cmd):
                 + "You are currently not playing a game, use 'start' to start a new game."
                 + Style.RESET_ALL
             )
+
+    # Junho
+    def do_save(self, line):
+        """
+        Save the current game to a file
+        """
+        params = line.split()
+
+        if len(params) < 2:
+            print(Fore.RED + "Usage: save <filename> <method>" + Style.RESET_ALL)
+            return
+
+        filename = params[0]
+        method = params[1]
+
+        if self.game.state != State.STOPPED:
+            try:
+                if method == "pickle":
+                    self.file_handler.save_game_with_pickle(self.game, filename)
+                    print(Fore.GREEN + f"Game saved as '{filename}.pkl' using pickle" + Style.RESET_ALL)
+                elif method == "shelf":
+                    print(Fore.GREEN + f"Game saved as '{filename}' using shelf" + Style.RESET_ALL)
+                else:
+                    print(Fore.RED + "Invalid save method. Use 'pickle' or 'shelf'." + Style.RESET_ALL)
+            except Exception as e:
+                print(Fore.RED + f"An error occurred while saving the game: {e}" + Style.RESET_ALL)
+        else:
+            print(
+                Fore.RED
+                + "You are currently not playing a game. Use 'start' to start a new game."
+                + Style.RESET_ALL
+            )
+
+
+    # Junho
+    def do_load(self, filename):
+        """
+        Load a saved game from a file
+        """
+        try:
+            loaded_game = self.file_handler.load_game_with_pickle(filename)
+            if loaded_game:
+                self.game = loaded_game
+                self.game.image_handler.create_map_image(self.game.game_data.map, self.game.player)
+                print(Fore.GREEN + f"Game loaded from '{filename}.pkl'" + Style.RESET_ALL)
+                self.game.get_game_status()
+            else:
+                print(Fore.RED + f"Could not load game from '{filename}.pkl'" + Style.RESET_ALL)
+        except Exception as e:
+            print(Fore.RED + f"An error occurred while loading the game: {e}" + Style.RESET_ALL)
+
+
