@@ -285,7 +285,6 @@ class Game:
                 print(Fore.RED + "Patio tile not found in outdoor tiles!" + Style.RESET_ALL)
                 return
 
-
     def get_current_tile(self):
         return self.game_data.map[self.player.y][self.player.x]
 
@@ -459,4 +458,3 @@ class Game:
             + f"{amount} Zombies have appeared."
             + Style.RESET_ALL
         )
-
