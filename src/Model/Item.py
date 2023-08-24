@@ -7,7 +7,3 @@ class Item:
         self.combines_with = combines_with
         self.makes = makes
         self.action_amount = action_amount
-
-    @staticmethod
-    def add_attack(self, player, value):
-        player.attack += value
