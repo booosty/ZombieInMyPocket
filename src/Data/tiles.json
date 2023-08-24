@@ -62,9 +62,9 @@
     "action": false,
     "type": "Outdoor",
     "north": true,
-    "east": true,
+    "east": false,
     "south": true,
-    "west": false
+    "west": true
   },
   {
     "id": 6,
