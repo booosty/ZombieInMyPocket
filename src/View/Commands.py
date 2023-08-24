@@ -9,11 +9,25 @@ from Model.FileHandler import FileHandler
 class Commands(cmd.Cmd):
     intro = "Welcome to Zombies in my Pocket!"
 
-    def __init__(self):
+    def __init__(self, args=""):
         cmd.Cmd.__init__(self)
         self.prompt = ">> "
         self.game = Game()
         self.file_handler = FileHandler()
+        self.args = args
+
+        if len(args) > 1:
+            self.check_args(args)
+
+    def check_args(self, args):
+        for command in args:
+            match command:
+                case "start":
+                    self.do_start(command)
+                case "help":
+                    self.do_help(command)
+                case "exit":
+                    self.do_exit(command)
 
     def do_start(self, line):
         """

@@ -1,5 +1,3 @@
-import unittest
-
 from Model.Direction import Direction
 from Model.GameData import GameData
 from Model.ImageHandler import ImageHandler
