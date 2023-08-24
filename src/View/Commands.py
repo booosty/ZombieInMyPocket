@@ -348,7 +348,7 @@ class Commands(cmd.Cmd):
             "attack", "run", "get_inventory", "exit", "restart",
             "get_status", "save", "load", "help_all"
         ]
-        print("Available commands:")
+        print("Available commands and descriptions:")
         for command in all_commands:
             doc = getattr(self, f"do_{command}").__doc__
             print(f"{command}: {doc}")
