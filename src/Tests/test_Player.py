@@ -1,7 +1,5 @@
 from unittest import TestCase
-
 from Model.Game import Game
-from Model.GameData import GameData
 from Model.Player import Player
 
 
