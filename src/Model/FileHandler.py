@@ -20,6 +20,16 @@ class FileHandler:
         with open(str(self.root_dir / "Saves") + "\\" + filename + ".pkl", "wb") as file:
             pickle.dump(game, file)
 
+    # William
+    def save_game_with_shelve(self, game, filename):
+        with shelve.open(str(self.root_dir / "Saves") + "\\" + filename + ".shelf", 'c') as file:
+            file["game"] = game
+
+    def load_game_with_shelve(self, filename):
+        with shelve.open(str(self.root_dir / "Saves") + "\\" + filename + ".shelf") as file:
+            game = file["game"]
+        return game
+
     # Junho
     def load_game_with_pickle(self, filename):
         with open(str(self.root_dir / "Saves") + "\\" + filename + ".pkl", "rb") as file:
