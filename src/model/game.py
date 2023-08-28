@@ -7,6 +7,9 @@ from colorama import Fore, Style
 
 
 class Game:
+    """
+    Main game object that holds everything else
+    """
     def __init__(self):
         self.game_data = GameData()
         self.player = Player(self.game_data, self)

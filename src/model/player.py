@@ -17,6 +17,7 @@ class Player:
         self.items = []
         self.hold_totem = False
 
+    # William
     def set_health(self, amount):
         """
         Increases or decreases player health based on amount
@@ -51,6 +52,7 @@ class Player:
             )
             exit()
 
+    # William
     def add_attack(self, amount):
         """
         Increases the players attack value
@@ -64,6 +66,7 @@ class Player:
             + Style.RESET_ALL
         )
 
+    # William
     def add_item(self, item) -> None:
         """
         Add an item to the players inventory if they do not currently already hold 2 items.
@@ -86,6 +89,7 @@ class Player:
                 )
                 self.items.append([items.name, items.uses])
 
+    # William
     def get_items(self):
         """
         Print out a list of items that the player currently holds
@@ -109,6 +113,7 @@ class Player:
                 + Style.RESET_ALL
             )
 
+    # William
     def delete_item(self, item="") -> None:
         """
         Delete an item out of the users inventory if they hold it.
@@ -122,6 +127,7 @@ class Player:
             if items[0] == item:
                 self.items.pop(self.items.index(items))
 
+    # William
     def do_attack(self):
         """
         Attack zombies when they appear, cannot be used outside of battle.
@@ -168,6 +174,7 @@ class Player:
         self.game.state = State.MOVING
         self.game.get_game_status()
 
+    # William
     def kill_all_zombies(self, item):
         """
         Item effect that kills all zombies that have appeared.
@@ -183,6 +190,7 @@ class Player:
         self.game.state = State.MOVING
         self.game.get_game_status()
 
+    # William
     def negate_damage(self):
         """
         Item effect that reduces the damage received to 0 when attacking
@@ -191,6 +199,7 @@ class Player:
         self.game.current_zombie_count = 0
         self.do_attack()
 
+    # William
     def use_item(self, index):
         """
         Use items effect from inventory based on index of item in inventory.

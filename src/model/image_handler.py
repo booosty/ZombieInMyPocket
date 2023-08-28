@@ -1,5 +1,4 @@
-import PIL.Image
-from PIL import Image, ImageOps, ImageDraw
+from PIL import Image, ImageOps
 from pathlib import Path
 
 
@@ -11,7 +10,8 @@ class ImageHandler:
         self.size = (150, 150)
         self.root_dir = Path(__file__).parent.parent / "data" / "Images"
 
-    def create_map_image(self, game_map, player, grid=(9, 9)):
+    # William
+    def create_map_image(self, game_map, grid=(9, 9)):
         width, height = self.size
 
         image_size = (width * grid[1], height * grid[0])

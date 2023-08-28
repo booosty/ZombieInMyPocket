@@ -8,6 +8,9 @@ from tkinter import filedialog
 
 
 class FileHandler:
+    """
+    Object to hold file related methods e.g. saving/loading game state
+    """
     def __init__(self):
         self.root_dir = Path(__file__).parent.parent
 

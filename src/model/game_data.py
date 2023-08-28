@@ -7,6 +7,9 @@ from model.tile import Tile
 
 
 class GameData:
+    """
+    Game data object that holds all the Tile and Card objects and related methods
+    """
     def __init__(self):
         self.map = [[0] * 9 for i in range(9)]
         self.prev_tile = None
