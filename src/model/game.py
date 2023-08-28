@@ -1,8 +1,8 @@
-from Model.Direction import Direction
-from Model.GameData import GameData
-from Model.ImageHandler import ImageHandler
-from Model.Player import Player
-from Model.State import State
+from model.direction import Direction
+from model.game_data import GameData
+from model.image_handler import ImageHandler
+from model.player import Player
+from model.state import State
 from colorama import Fore, Style
 
 

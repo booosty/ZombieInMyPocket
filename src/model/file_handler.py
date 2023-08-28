@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 import pickle
 import shelve
-from Model.ImageHandler import ImageHandler
+from model.image_handler import ImageHandler
 import tkinter as tk
 from tkinter import filedialog
 
@@ -12,7 +12,7 @@ class FileHandler:
         self.root_dir = Path(__file__).parent.parent
 
     def load_data_from_json(self, filename):
-        file = open(str(self.root_dir / "Data") + "\\" + filename + ".json")
+        file = open(str(self.root_dir / "data") + "\\" + filename + ".json")
         data = json.load(file)
         file.close()
         return data
@@ -35,11 +35,11 @@ class FileHandler:
 
     # William
     def save_game_with_shelve(self, game, filename):
-        with shelve.open(str(self.root_dir / "Saves") + "\\" + filename + ".shelf", 'c') as file:
+        with shelve.open(str(self.root_dir / "saves") + "\\" + filename + ".shelf", 'c') as file:
             file["game"] = game
 
     def load_game_with_shelve(self, filename):
-        with shelve.open(str(self.root_dir / "Saves") + "\\" + filename + ".shelf") as file:
+        with shelve.open(str(self.root_dir / "saves") + "\\" + filename + ".shelf") as file:
             game = file["game"]
         return game
 

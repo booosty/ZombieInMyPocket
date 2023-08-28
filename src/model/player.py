@@ -1,6 +1,6 @@
 from colorama import Fore, Style
 
-from Model.State import State
+from model.state import State
 
 
 class Player:

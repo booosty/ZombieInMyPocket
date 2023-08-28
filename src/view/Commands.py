@@ -1,9 +1,9 @@
 import cmd
 from colorama import Fore, Style
-from Model.Direction import Direction
-from Model.Game import Game
-from Model.State import State
-from Model.FileHandler import FileHandler
+from model.direction import Direction
+from model.game import Game
+from model.state import State
+from model.file_handler import FileHandler
 
 
 class Commands(cmd.Cmd):

@@ -1,9 +1,9 @@
 import random
 
-from Model.DevCard import DevCard
-from Model.Item import Item
-from Model.FileHandler import FileHandler
-from Model.Tile import Tile
+from model.dev_card import DevCard
+from model.item import Item
+from model.file_handler import FileHandler
+from model.tile import Tile
 
 
 class GameData:
