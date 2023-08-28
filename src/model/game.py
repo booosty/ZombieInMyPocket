@@ -44,6 +44,7 @@ class Game:
         current_tile = self.get_current_tile()
         current_doors = self.get_doors_string(current_tile)
 
+        # Out of time lose condition
         if self.time == 12:
             print(
                 Fore.RED

@@ -43,6 +43,7 @@ class Player:
             + Style.RESET_ALL
         )
 
+        # No health left lose condition
         if self.health <= 0:
             self.game.state = State.LOST
             print(
