@@ -20,6 +20,8 @@ class Commands(cmd.Cmd):
             "start": self.do_start,
             "help": self.do_help,
             "exit": self.do_exit,
+            "save": self.do_save_help,
+            "help_all": self.do_help_all
         }
 
         if len(args) > 1:
@@ -305,32 +307,32 @@ class Commands(cmd.Cmd):
         """
         params = line.split()
 
-        if len(params) < 2:
-            print(Fore.RED + "Usage: load <filename> <method>" + Style.RESET_ALL)
+        if len(params) < 1:
+            print(Fore.RED + "Usage: load <method>" + Style.RESET_ALL)
             return
 
-        filename = params[0]
-        method = params[1]
+        method = params[0]
 
         try:
             if method == "pickle":
-                loaded_game = self.file_handler.load_game_with_pickle(filename)
+                loaded_game = self.file_handler.load_game_with_pickle()
                 if loaded_game:
                     self.game = loaded_game
                     self.game.image_handler.create_map_image(self.game.game_data.map, self.game.player)
-                    print(Fore.GREEN + f"Game loaded from '{filename}.pkl'" + Style.RESET_ALL)
+                    print(Fore.GREEN + "Game loaded from selected file" + Style.RESET_ALL)
                     self.game.get_game_status()
                 else:
-                    print(Fore.RED + f"Could not load game from '{filename}.pkl'" + Style.RESET_ALL)
-            elif method == "shelf":
-                loaded_game = self.file_handler.load_game_with_shelve(filename)
-                if loaded_game:
-                    self.game = loaded_game
-                    self.game.image_handler.create_map_image(self.game.game_data.map, self.game.player)
-                    print(Fore.GREEN + f"Game loaded from '{filename}.shelf'" + Style.RESET_ALL)
-                    self.game.get_game_status()
-                else:
-                    print(Fore.RED + f"Could not load game from '{filename}.shelf'" + Style.RESET_ALL)
+                    print(Fore.RED + "Could not load game from selected file" + Style.RESET_ALL)
+
+            # elif method == "shelf":
+            #     loaded_game = self.file_handler.load_game_with_shelve(filename)
+            #     if loaded_game:
+            #         self.game = loaded_game
+            #         self.game.image_handler.create_map_image(self.game.game_data.map, self.game.player)
+            #         print(Fore.GREEN + f"Game loaded from '{filename}.shelf'" + Style.RESET_ALL)
+            #         self.game.get_game_status()
+            #     else:
+            #         print(Fore.RED + f"Could not load game from '{filename}.shelf'" + Style.RESET_ALL)
 
         except Exception as e:
             print(Fore.RED + f"An error occurred while loading the game: {e}" + Style.RESET_ALL)
@@ -350,3 +352,12 @@ class Commands(cmd.Cmd):
         for command in all_commands:
             doc = getattr(self, f"do_{command}").__doc__
             print(f"{command}: {doc}")
+
+    def do_save_help(self, line):
+        """
+        Displays load/save commands & syntax
+        """
+        print(
+            Fore.GREEN + "Loading\nUsage: load <method> \n\n"
+            "Saving\nUsage: save <filename> <method>\n\nMethods: pickle / shelf" + Style.RESET_ALL
+        )

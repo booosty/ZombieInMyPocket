@@ -3,6 +3,8 @@ from pathlib import Path
 import pickle
 import shelve
 from Model.ImageHandler import ImageHandler
+import tkinter as tk
+from tkinter import filedialog
 
 
 class FileHandler:
@@ -17,8 +19,19 @@ class FileHandler:
 
     # Junho
     def save_game_with_pickle(self, game, filename):
-        with open(str(self.root_dir / "Saves") + "\\" + filename + ".pkl", "wb") as file:
-            pickle.dump(game, file)
+        root = tk.Tk()
+        root.withdraw()  # Hide the main window
+        root.attributes("-topmost", True)  # Make the file dialog appear on top
+
+        file_path = filedialog.asksaveasfilename(
+            initialfile=filename,
+            defaultextension=".pkl",
+            filetypes=[("Pickle Files", "*.pkl"), ("All Files", "*.*")]
+        )
+
+        if file_path:
+            with open(file_path, "wb") as file:
+                pickle.dump(game, file)
 
     # William
     def save_game_with_shelve(self, game, filename):
@@ -31,11 +44,25 @@ class FileHandler:
         return game
 
     # Junho
-    def load_game_with_pickle(self, filename):
-        with open(str(self.root_dir / "Saves") + "\\" + filename + ".pkl", "rb") as file:
-            game = pickle.load(file)
+    def load_game_with_pickle(self):
+        root = tk.Tk()
+        root.withdraw()  # Hide the main window
 
-        # Restore the image_handler attribute
-        game.image_handler = ImageHandler()
+        root.attributes("-topmost", True)  # Make the file dialog appear on top
 
-        return game
+        file_path = filedialog.askopenfilename(
+            filetypes=[("Pickle Files", "*.pkl"), ("All Files", "*.*")]
+        )
+
+        root.attributes("-topmost", False)
+
+        if file_path:
+            with open(file_path, "rb") as file:
+                game = pickle.load(file)
+
+            # Restore the image_handler attribute
+            game.image_handler = ImageHandler()
+
+            return game
+
+
