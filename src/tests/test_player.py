@@ -14,9 +14,17 @@ class TestPlayer(TestCase):
             self.player.x
         ] = self.game.game_data.get_tile_by_name("Foyer")
 
-    def test_set_health(self):
+    def test_set_health_positive(self):
         initial_health = self.player.health
         add_amount = 2
+        self.player.set_health(add_amount)
+        expected = initial_health + add_amount
+
+        self.assertEqual(self.player.health, expected)
+
+    def test_set_health_negative(self):
+        initial_health = self.player.health
+        add_amount = -1
         self.player.set_health(add_amount)
         expected = initial_health + add_amount
 
@@ -45,16 +53,25 @@ class TestPlayer(TestCase):
 
         self.assertEqual(self.player.items, expected)
 
-    def test_do_attack(self):
+    def test_do_attack_expected_zombies(self):
         self.game.current_zombie_count = 1
         self.player.do_attack()
-
         expected_zombies = 0
-        expected_health = 6
-        expected_attack = 0
 
         self.assertEqual(self.game.current_zombie_count, expected_zombies)
+
+    def test_do_attack_expected_health(self):
+        self.game.current_zombie_count = 1
+        self.player.do_attack()
+        expected_health = 6
+
         self.assertEqual(self.player.health, expected_health)
+
+    def test_do_attack_expected_attack(self):
+        self.game.current_zombie_count = 1
+        self.player.do_attack()
+        expected_attack = 0
+
         self.assertEqual(self.player.attack, expected_attack)
 
     def test_do_run(self):
