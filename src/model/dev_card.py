@@ -1,4 +1,7 @@
 class DevCard:
+    """
+    Object for dev cards available in game and their respective actions/messages
+    """
     def __init__(
         self,
         item,

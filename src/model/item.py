@@ -1,4 +1,7 @@
 class Item:
+    """
+    Object for every item available in game and its respective stats
+    """
     def __init__(self, name, action, uses, combinable, combines_with, makes, action_amount=0):
         self.name = name
         self.action = action

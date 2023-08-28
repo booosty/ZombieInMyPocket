@@ -4,6 +4,9 @@ from pathlib import Path
 
 
 class ImageHandler:
+    """
+    Image class and functions to create and save map based on game data
+    """
     def __init__(self):
         self.size = (150, 150)
         self.root_dir = Path(__file__).parent.parent / "data" / "Images"

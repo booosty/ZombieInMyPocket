@@ -1,4 +1,7 @@
 class Tile:
+    """
+    Tile object for every tile available in the game and the respective doors/entrances
+    """
     def __init__(
         self,
         name,

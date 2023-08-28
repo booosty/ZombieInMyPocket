@@ -2,6 +2,9 @@ from enum import Enum
 
 
 class State(Enum):
+    """
+    Different game play states available in game
+    """
     STARTED = 1
     STOPPED = 2
     ROTATING = 3
