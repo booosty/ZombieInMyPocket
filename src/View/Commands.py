@@ -103,6 +103,7 @@ class Commands(cmd.Cmd):
                 + Style.RESET_ALL
             )
 
+    # Junho
     def do_cower(self, line):
         """
         Player cowers in their current tile
@@ -117,20 +118,17 @@ class Commands(cmd.Cmd):
                 + Style.RESET_ALL
             )
 
+    # Junho
     def do_rotate(self, line):
         """
         Rotates the current tile 90 degrees clockwise
         """
         if self.game.state == State.ROTATING:
             current_tile = self.game.get_current_tile()
-            self.game.rotate_tile(current_tile)  # Pass the current tile to the rotate_tile method
+            self.game.rotate_tile(current_tile)
             self.game.get_game_status()
         else:
-            print(
-                Fore.RED
-                + "You are currently not in the rotating state"
-                + Style.RESET_ALL
-            )
+            print(Fore.RED + "You are currently not in the rotating state" + Style.RESET_ALL)
 
     def do_place(self, line):
         """
@@ -139,11 +137,7 @@ class Commands(cmd.Cmd):
         if self.game.state == State.ROTATING:
             self.game.place_tile()
         else:
-            print(
-                Fore.RED
-                + "You are currently not in the rotating state"
-                + Style.RESET_ALL
-            )
+            print(Fore.RED + "You are currently not in the rotating state" + Style.RESET_ALL)
 
     def do_draw(self, line):
         """
@@ -169,7 +163,8 @@ class Commands(cmd.Cmd):
                     Fore.RED + "You can't currently use an item at the moment" + Style.RESET_ALL
                 )
         except Exception as e:
-            print(Fore.RED + f"An error occurred while using the item, make sure you're entering a number: {e}" + Style.RESET_ALL)
+            print(Fore.RED + f"An error occurred while using the item, make sure you're entering a number: {e}" +
+                  Style.RESET_ALL)
 
     def do_search(self, line):
         """
