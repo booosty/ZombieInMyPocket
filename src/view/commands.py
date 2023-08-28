@@ -35,6 +35,7 @@ class Commands(cmd.Cmd):
             else:
                 print(f"Unknown command: {command}")
 
+    # William
     def do_start(self, line):
         """
         Starts a new game of Zombies in my Pocket
@@ -49,6 +50,7 @@ class Commands(cmd.Cmd):
                 + Style.RESET_ALL
             )
 
+    # William
     def do_move_n(self, line):
         """
         Moves player to a NORTH tile
@@ -63,6 +65,7 @@ class Commands(cmd.Cmd):
                 + Style.RESET_ALL
             )
 
+    # William
     def do_move_e(self, line):
         """
         Moves player to a EAST tile
@@ -77,6 +80,7 @@ class Commands(cmd.Cmd):
                 + Style.RESET_ALL
             )
 
+    # William
     def do_move_s(self, line):
         """
         Moves player to a SOUTH tile
@@ -91,6 +95,7 @@ class Commands(cmd.Cmd):
                 + Style.RESET_ALL
             )
 
+    # William
     def do_move_w(self, line):
         """
         Moves player to a WEST tile
@@ -132,6 +137,7 @@ class Commands(cmd.Cmd):
         else:
             print(Fore.RED + "You are currently not in the rotating state" + Style.RESET_ALL)
 
+    # William
     def do_place(self, line):
         """
         Places tile at current location and rotation
@@ -141,6 +147,7 @@ class Commands(cmd.Cmd):
         else:
             print(Fore.RED + "You are currently not in the rotating state" + Style.RESET_ALL)
 
+    # William
     def do_draw(self, line):
         """
         Draws a new dev card from the pile
@@ -168,6 +175,7 @@ class Commands(cmd.Cmd):
             print(Fore.RED + f"An error occurred while using the item, make sure you're entering a number: {e}" +
                   Style.RESET_ALL)
 
+    # William
     def do_search(self, line):
         """
         Searches the current tile to see if the Totem is around
@@ -179,6 +187,7 @@ class Commands(cmd.Cmd):
                 Fore.RED + "You can't currently search at the moment" + Style.RESET_ALL
             )
 
+    # William
     def do_bury(self, line):
         """
         Bury the totem at the Graveyard
@@ -221,6 +230,7 @@ class Commands(cmd.Cmd):
                 + Style.RESET_ALL
             )
 
+    # William
     def do_get_inventory(self, line):
         """
         Displays items that you currently hold in inventory and charges left.
@@ -234,6 +244,7 @@ class Commands(cmd.Cmd):
                 + Style.RESET_ALL
             )
 
+    # William
     @staticmethod
     def do_exit(self):
         """
@@ -244,6 +255,7 @@ class Commands(cmd.Cmd):
         )
         return True
 
+    # William
     def do_restart(self, line):
         """
         Restarts the current game. Does not save any progress.
@@ -254,6 +266,7 @@ class Commands(cmd.Cmd):
         self.game.create_game()
         self.game.get_game_status()
 
+    # William
     def do_get_status(self, line):
         """
         Returns players status of current player
@@ -274,21 +287,29 @@ class Commands(cmd.Cmd):
         """
         params = line.split()
 
-        if len(params) < 2:
-            print(Fore.RED + "Usage: save <filename> <method>" + Style.RESET_ALL)
+        if len(params) < 1:
+            print(Fore.RED + "Usage: save <method> <filename = optional> " + Style.RESET_ALL)
             return
 
-        filename = params[0]
-        method = params[1]
+        method = params[0]
+        filename = None
+
+        if len(params) > 1:
+            filename = params[1]
 
         if self.game.state != State.STOPPED:
             try:
                 if method == "pickle":
                     self.file_handler.save_game_with_pickle(self.game, filename)
                     print(Fore.GREEN + f"Game saved as '{filename}.pkl' using pickle" + Style.RESET_ALL)
+                # William
                 elif method == "shelf":
-                    self.file_handler.save_game_with_shelve(self.game, filename)
-                    print(Fore.GREEN + f"Game saved as '{filename}.shelf' using shelf" + Style.RESET_ALL)
+                    if filename:
+                        self.file_handler.save_game_with_shelve(self.game, filename)
+                        print(Fore.GREEN + f"Game saved as '{filename}.shelf' using shelf" + Style.RESET_ALL)
+                    else:
+                        self.file_handler.save_game_with_shelve(self.game)
+                        print(Fore.GREEN + f"Game saved using shelf." + Style.RESET_ALL)
                 else:
                     print(Fore.RED + "Invalid save method. Use 'pickle' or 'shelf'." + Style.RESET_ALL)
             except Exception as e:
@@ -308,10 +329,14 @@ class Commands(cmd.Cmd):
         params = line.split()
 
         if len(params) < 1:
-            print(Fore.RED + "Usage: load <method>" + Style.RESET_ALL)
+            print(Fore.RED + "Usage: load <method> <filename = optional>" + Style.RESET_ALL)
             return
 
         method = params[0]
+        filename = None
+
+        if len(params) > 1:
+            filename = params[1]
 
         try:
             if method == "pickle":
@@ -324,15 +349,20 @@ class Commands(cmd.Cmd):
                 else:
                     print(Fore.RED + "Could not load game from selected file" + Style.RESET_ALL)
 
-            # elif method == "shelf":
-            #     loaded_game = self.file_handler.load_game_with_shelve(filename)
-            #     if loaded_game:
-            #         self.game = loaded_game
-            #         self.game.image_handler.create_map_image(self.game.game_data.map, self.game.player)
-            #         print(Fore.GREEN + f"Game loaded from '{filename}.shelf'" + Style.RESET_ALL)
-            #         self.game.get_game_status()
-            #     else:
-            #         print(Fore.RED + f"Could not load game from '{filename}.shelf'" + Style.RESET_ALL)
+            # William
+            elif method == "shelf":
+                print(filename)
+                if filename:
+                    loaded_game = self.file_handler.load_game_with_shelve(filename)
+                else:
+                    loaded_game = self.file_handler.load_game_with_shelve()
+                if loaded_game:
+                    self.game = loaded_game
+                    self.game.image_handler.create_map_image(self.game.game_data.map, self.game.player)
+                    print(Fore.GREEN + f"Game loaded from save file" + Style.RESET_ALL)
+                    self.game.get_game_status()
+                else:
+                    print(Fore.RED + f"Could not load game from '{filename}.shelf'" + Style.RESET_ALL)
 
         except Exception as e:
             print(Fore.RED + f"An error occurred while loading the game: {e}" + Style.RESET_ALL)

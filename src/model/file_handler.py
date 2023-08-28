@@ -11,6 +11,7 @@ class FileHandler:
     def __init__(self):
         self.root_dir = Path(__file__).parent.parent
 
+    # William
     def load_data_from_json(self, filename):
         file = open(str(self.root_dir / "data") + "\\" + filename + ".json")
         data = json.load(file)
@@ -34,14 +35,45 @@ class FileHandler:
                 pickle.dump(game, file)
 
     # William
-    def save_game_with_shelve(self, game, filename):
-        with shelve.open(str(self.root_dir / "saves") + "\\" + filename + ".shelf", 'c') as file:
-            file["game"] = game
+    def save_game_with_shelve(self, game, filename=""):
+        if filename != "":
+            with shelve.open(str(self.root_dir / "saves") + "\\" + filename + ".db", flag='c', protocol=4) as file:
+                file["game"] = game
+        else:
+            root = tk.Tk()
+            root.withdraw()
+            root.attributes("-topmost", True)
 
-    def load_game_with_shelve(self, filename):
-        with shelve.open(str(self.root_dir / "saves") + "\\" + filename + ".shelf") as file:
-            game = file["game"]
-        return game
+            file_path = filedialog.asksaveasfilename(
+                initialfile=filename,
+                defaultextension=".shelf",
+                filetypes=[("Shelve Files", "*.shelf"), ("All Files", "*.*")]
+            )
+
+            if file_path:
+                with shelve.open(file_path, "c") as file:
+                    file["game"] = game
+
+    # William
+    def load_game_with_shelve(self, filename=""):
+        if filename != "":
+            with shelve.open(str(self.root_dir / "saves") + "\\" + filename + ".db") as file:
+                game = file["game"]
+            return game
+        else:
+            root = tk.Tk()
+            root.withdraw()
+            file_path = filedialog.askopenfilename(
+                filetypes=[("Shelve Files", "*.bak"), ("All Files", "*.*")]
+            )
+
+            if file_path:
+                # Remove extension from filepath
+                file_path = file_path[:-4]
+                print(file_path)
+                with shelve.open(file_path) as file:
+                    game = file["game"]
+                return game
 
     # Junho
     def load_game_with_pickle(self):
