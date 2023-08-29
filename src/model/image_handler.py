@@ -11,7 +11,7 @@ class ImageHandler:
         self.root_dir = Path(__file__).parent.parent / "data" / "Images"
 
     # William
-    def create_map_image(self, game_map, grid=(9, 9)):
+    def create_map_image(self, game_map, player, grid=(9, 9)):
         width, height = self.size
 
         image_size = (width * grid[1], height * grid[0])

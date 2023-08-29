@@ -1,5 +1,7 @@
 import cmd
 from colorama import Fore, Style
+
+from model.database_handler import DatabaseHandler
 from model.direction import Direction
 from model.game import Game
 from model.state import State
@@ -15,6 +17,7 @@ class Commands(cmd.Cmd):
         self.prompt = ">> "
         self.game = Game()
         self.file_handler = FileHandler()
+        self.database_handler = DatabaseHandler()
         self.args = args
         self.command_methods = {
             "start": self.do_start,
@@ -321,6 +324,42 @@ class Commands(cmd.Cmd):
                 + Style.RESET_ALL
             )
 
+    # William
+    def do_save_db(self, line):
+        """
+        Save current game state to database.
+        """
+        if self.game.state != State.STOPPED:
+            try:
+                self.database_handler.save_to_sqlite(self.game)
+                print(Fore.GREEN + f"Game saved to database." + Style.RESET_ALL)
+            except Exception as e:
+                print(Fore.RED + f"An error occurred while saving the game: {e}" + Style.RESET_ALL)
+        else:
+            print(
+                Fore.RED
+                + "You are currently not playing a game. Use 'start' to start a new game."
+                + Style.RESET_ALL
+            )
+
+    # William
+    def do_load_db(self, line):
+        """
+        Load game state from database
+        """
+        try:
+            loaded_game = self.database_handler.load_from_sqlite()
+            if loaded_game:
+                self.game = loaded_game
+                self.game.image_handler.create_map_image(self.game.game_data.map, self.game.player)
+                print(Fore.GREEN + "Game loaded from database." + Style.RESET_ALL)
+                self.game.get_game_status()
+            else:
+                print(Fore.RED + "Could not load game from database." + Style.RESET_ALL)
+
+        except Exception as e:
+            print(Fore.RED + f"An error occurred while loading the game: {e}" + Style.RESET_ALL)
+
     # Junho
     def do_load(self, line):
         """
@@ -351,7 +390,6 @@ class Commands(cmd.Cmd):
 
             # William
             elif method == "shelf":
-                print(filename)
                 if filename:
                     loaded_game = self.file_handler.load_game_with_shelve(filename)
                 else:
@@ -389,5 +427,5 @@ class Commands(cmd.Cmd):
         """
         print(
             Fore.GREEN + "Loading\nUsage: load <method> \n\n"
-            "Saving\nUsage: save <filename> <method>\n\nMethods: pickle / shelf" + Style.RESET_ALL
+            "Saving\nUsage: save <method> <filename = optional>\n\nMethods: pickle / shelf" + Style.RESET_ALL
         )
