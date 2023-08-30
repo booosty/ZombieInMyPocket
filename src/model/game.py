@@ -49,6 +49,7 @@ class Game:
         self.image_handler.create_map_image(self.game_data.map, self.player)
         self.state = State.MOVING
 
+    # Junho
     def get_game_status(self):
         """
         Print out current game statistics

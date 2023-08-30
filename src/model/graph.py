@@ -15,6 +15,10 @@ class Graph:
         self.health_list.append(health)
 
     def generate_health_turn_graph(self):
+        if not self.turn_list or not self.health_list:
+            print("No data available to generate the graph.")
+            return
+
         x = self.turn_list
         y = self.health_list
 

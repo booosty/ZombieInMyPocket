@@ -373,7 +373,18 @@ class Commands(cmd.Cmd):
             print(Fore.RED + "Usage: load <method> <filename = optional>" + Style.RESET_ALL)
             return
 
+        if len(params) > 3:
+            print(Fore.RED + "Too many arguments. Usage: load <method> <filename = optional>" + Style.RESET_ALL)
+            return
+
         method = params[0]
+        valid_methods = ["pickle", "shelf"]  # Add more valid methods if needed
+
+        if method not in valid_methods:
+            print(
+                Fore.RED + f"Invalid method: {method}. Valid methods are: {', '.join(valid_methods)}" + Style.RESET_ALL)
+            return
+
         filename = None
 
         if len(params) > 1:
@@ -390,7 +401,6 @@ class Commands(cmd.Cmd):
                 else:
                     print(Fore.RED + "Could not load game from selected file" + Style.RESET_ALL)
 
-            # William
             elif method == "shelf":
                 if filename:
                     loaded_game = self.file_handler.load_game_with_shelve(filename)
