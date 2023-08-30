@@ -30,7 +30,7 @@ class FileHandler:
         file_path = filedialog.asksaveasfilename(
             initialfile=filename,
             defaultextension=".pkl",
-            filetypes=[("Pickle Files", "*.pkl"), ("All Files", "*.*")]
+            filetypes=[("Pickle Files", "*.pkl")]
         )
 
         if file_path:
@@ -86,7 +86,7 @@ class FileHandler:
         root.attributes("-topmost", True)  # Make the file dialog appear on top
 
         file_path = filedialog.askopenfilename(
-            filetypes=[("Pickle Files", "*.pkl"), ("All Files", "*.*")]
+            filetypes=[("Pickle Files", "*.pkl")]
         )
 
         root.attributes("-topmost", False)

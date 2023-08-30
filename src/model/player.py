@@ -10,7 +10,7 @@ class Player:
     def __init__(self, game_data, game):
         self.game = game
         self.game_data = game_data
-        self.health = 6
+        self.health = 4
         self.attack = 1
         self.x = 4
         self.y = 8

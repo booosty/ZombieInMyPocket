@@ -4,6 +4,7 @@ from model.image_handler import ImageHandler
 from model.player import Player
 from model.state import State
 from colorama import Fore, Style
+from model.graph import Graph
 
 
 class Game:
@@ -11,6 +12,7 @@ class Game:
     Main game object that holds everything else
     """
     def __init__(self):
+        self.health_turn_graph = Graph()
         self.game_data = GameData()
         self.player = Player(self.game_data, self)
         self.current_direction = None
@@ -19,6 +21,9 @@ class Game:
         self.state = State.STOPPED
         self.time = 0
         self.devcard_draw_count = 0
+
+    def generate_health_turn_graph(self):
+        self.health_turn_graph.generate_health_turn_graph()
 
     def create_game(self):
         print(Fore.YELLOW)
@@ -51,12 +56,14 @@ class Game:
                 + "Sorry time has run out for you! You loose."
                 + Style.RESET_ALL
             )
+            self.graph.generate_health_turn_graph()
             exit()
 
         if self.state == State.WON:
             print(
                 Fore.GREEN + "Congratulations you have won the game!" + Style.RESET_ALL
             )
+            self.graph.generate_health_turn_graph()
             exit()
 
         state = Fore.BLUE + ""
@@ -188,6 +195,7 @@ class Game:
         if self.state == State.MOVING:
             self.state = State.COWERING
             self.player.set_health(3)
+            self.health_turn_graph.increase_turn()
             self.discard_devcard()
             print(
                 Fore.MAGENTA
@@ -342,6 +350,8 @@ class Game:
 
     # Junho
     def discard_devcard(self):
+        self.health_turn_graph.increase_turn()
+        self.health_turn_graph.add_health(self.player.health)
         if len(self.game_data.dev_cards) <= 1:
             self.time += 1
             self.game_data.dev_cards = []
@@ -365,6 +375,7 @@ class Game:
             self.game_data.import_dev_cards()
             self.game_data.shuffle_devcard_deck()
             self.game_data.remove_two_devcards()
+
             print(
                 Fore.CYAN
                 + "You have drawn all the cards available. Resetting deck."

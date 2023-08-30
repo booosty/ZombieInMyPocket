@@ -6,6 +6,7 @@ from model.direction import Direction
 from model.game import Game
 from model.state import State
 from model.file_handler import FileHandler
+from model.graph import Graph
 
 
 class Commands(cmd.Cmd):
@@ -248,14 +249,16 @@ class Commands(cmd.Cmd):
             )
 
     # William
-    @staticmethod
-    def do_exit(self):
+
+    def do_exit(self, line):
         """
         Quit Zombies in my Pocket
         """
         print(
             Fore.GREEN + "Thank you for playing Zombies in my Pocket!" + Style.RESET_ALL
         )
+        self.game.generate_health_turn_graph()
+
         return True
 
     # William
@@ -414,12 +417,15 @@ class Commands(cmd.Cmd):
             "start", "move_n", "move_e", "move_s", "move_w", "cower",
             "rotate", "place", "draw", "use_item", "search", "bury",
             "attack", "run", "get_inventory", "exit", "restart",
-            "get_status", "save", "load", "help_all"
+            "get_status", "save", "load", "help_all",
         ]
         print("Available commands and descriptions:")
-        for command in all_commands:
-            doc = getattr(self, f"do_{command}").__doc__
-            print(f"{command}: {doc}")
+        try:
+            for command in all_commands:
+                doc = getattr(self, f"do_{command}").__doc__
+                print(f"{command}: {doc}")
+        except Exception as e:
+            print(Fore.RED + f"Invalid command found: {e}" + Style.RESET_ALL)
 
     def do_save_help(self, line):
         """
