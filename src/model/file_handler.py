@@ -16,6 +16,11 @@ class FileHandler:
 
     # William
     def load_data_from_json(self, filename):
+        """
+        Load json file from specified filename and return it
+        :param filename:
+        :return:
+        """
         file = open(str(self.root_dir / "data") + "\\" + filename + ".json")
         data = json.load(file)
         file.close()
@@ -39,6 +44,12 @@ class FileHandler:
 
     # William
     def save_game_with_shelve(self, game, filename=""):
+        """
+        Save game state into a .shelf file
+        :param game:
+        :param filename:
+        :return:
+        """
         if filename != "":
             with shelve.open(str(self.root_dir / "saves") + "\\" + filename + ".db", flag='c', protocol=4) as file:
                 file["game"] = game
@@ -59,6 +70,11 @@ class FileHandler:
 
     # William
     def load_game_with_shelve(self, filename=""):
+        """
+        Load game state from a .shelf file
+        :param filename:
+        :return:
+        """
         if filename != "":
             with shelve.open(str(self.root_dir / "saves") + "\\" + filename + ".db") as file:
                 game = file["game"]

@@ -22,6 +22,9 @@ class Graph:
         plt.title("Health at Each Turn")
         plt.xlabel("Turn Number")
         plt.ylabel("Health")
+
+        # Set x-axis and y-axis ticks to integer values
+        plt.xticks(range(int(min(x)), int(max(x)) + 1))
+        plt.yticks(range(int(min(y)), int(max(y)) + 1))
+
         plt.show()
-
-

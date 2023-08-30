@@ -26,6 +26,10 @@ class Game:
         self.health_turn_graph.generate_health_turn_graph()
 
     def create_game(self):
+        """
+        Setup new game and prepare map/items/cards
+        :return:
+        """
         print(Fore.YELLOW)
         print(
             "The dead walk the earth. You must search the house for the Evil Temple, and find the zombie totem."
@@ -46,24 +50,32 @@ class Game:
         self.state = State.MOVING
 
     def get_game_status(self):
+        """
+        Print out current game statistics
+        :return:
+        """
         current_tile = self.get_current_tile()
         current_doors = self.get_doors_string(current_tile)
 
         # Out of time lose condition
         if self.time == 12:
+            self.health_turn_graph.increase_turn()
+            self.health_turn_graph.add_health(self.player.health)
             print(
                 Fore.RED
-                + "Sorry time has run out for you! You loose."
+                + "Sorry time has run out for you! You lose."
                 + Style.RESET_ALL
             )
-            self.graph.generate_health_turn_graph()
+            self.health_turn_graph.generate_health_turn_graph()
             exit()
 
         if self.state == State.WON:
+            self.health_turn_graph.increase_turn()
+            self.health_turn_graph.add_health(self.player.health)
             print(
                 Fore.GREEN + "Congratulations you have won the game!" + Style.RESET_ALL
             )
-            self.graph.generate_health_turn_graph()
+            self.health_turn_graph.generate_health_turn_graph()
             exit()
 
         state = Fore.BLUE + ""
@@ -106,6 +118,11 @@ class Game:
         print(state_message)
 
     def move_player(self, direction):
+        """
+        Move player in direction with logic checking
+        :param direction:
+        :return:
+        """
         current_tile = self.get_current_tile()
         place_patio = False
         next_tile = None
@@ -192,10 +209,13 @@ class Game:
         self.get_game_status()
 
     def cower(self):
+        """
+        Execute cower command with error checking
+        :return:
+        """
         if self.state == State.MOVING:
             self.state = State.COWERING
             self.player.set_health(3)
-            self.health_turn_graph.increase_turn()
             self.discard_devcard()
             print(
                 Fore.MAGENTA
@@ -213,6 +233,11 @@ class Game:
         self.get_game_status()
 
     def check_tile_action(self, tile):
+        """
+        Check if tile has an action and do appropriate action
+        :param tile:
+        :return:
+        """
         if tile.action == "add_health":
             self.player.set_health(3)
 
@@ -235,6 +260,11 @@ class Game:
             )
 
     def rotate_tile(self, tile):
+        """
+        Rotate the tile 90 degrees clockwise and update
+        :param tile:
+        :return:
+        """
         if tile.name == "Patio":
             tile.rotate_factor = (tile.rotate_factor + 2) % 4
             temp = tile.door_n
@@ -256,6 +286,10 @@ class Game:
         self.image_handler.create_map_image(self.game_data.map, self.player)
 
     def place_tile(self):
+        """
+        Place tile with current rotation if meets requirements, or return error
+        :return:
+        """
         current_tile = self.get_current_tile()
 
         match self.current_direction:
@@ -297,6 +331,10 @@ class Game:
                 return
 
     def get_current_tile(self):
+        """
+        Get tile object at x,y co-ordinates
+        :return:
+        """
         return self.game_data.map[self.player.y][self.player.x]
 
     def search_tile(self):
@@ -317,6 +355,10 @@ class Game:
             )
 
     def bury_totem(self):
+        """
+        Bury totem if requirements are met otherwise return message
+        :return:
+        """
         current_tile = self.get_current_tile()
         if current_tile.name == "Graveyard" and self.player.hold_totem:
             self.state = State.WON
@@ -342,6 +384,10 @@ class Game:
         return doors
 
     def get_player_stats(self):
+        """
+        Print out current player statistics
+        :return:
+        """
         print(f"The current time is: {self.time}pm")
         print(f"Your current health is: {self.player.health}")
         print(f"Your current attack is: {self.player.attack}")
@@ -350,6 +396,10 @@ class Game:
 
     # Junho
     def discard_devcard(self):
+        """
+        Remove dev card from hand, recreate deck and shuffle if no more left
+        :return:
+        """
         self.health_turn_graph.increase_turn()
         self.health_turn_graph.add_health(self.player.health)
         if len(self.game_data.dev_cards) <= 1:
@@ -368,6 +418,10 @@ class Game:
             self.game_data.dev_cards.pop()
 
     def draw_devcard(self):
+        """
+        Draw a new devcard to hand, recreate and shuffle deck if no more left
+        :return:
+        """
         if len(self.game_data.dev_cards) <= 1:
             # All Dev cards have been drawn, reset the deck and increment time
             self.time += 1
@@ -389,6 +443,9 @@ class Game:
             + Style.RESET_ALL
         )
 
+        self.health_turn_graph.increase_turn()
+        self.health_turn_graph.add_health(self.player.health)
+
         drawn_card = self.game_data.dev_cards.pop(0)
         self.do_devcard_effect(drawn_card)
         self.devcard_draw_count += 1
@@ -397,6 +454,11 @@ class Game:
         self.get_game_status()
 
     def do_devcard_effect(self, devcard):
+        """
+        Take a devcard and perform action or display message
+        :param devcard:
+        :return:
+        """
         match self.time:
             case 9:
                 if devcard.nine_message:
@@ -465,6 +527,11 @@ class Game:
                             self.player.add_item(next_card.item)
 
     def add_zombies(self, amount):
+        """
+        Add zombies to the current count
+        :param amount:
+        :return:
+        """
         self.current_zombie_count += amount
         self.state = State.BATTLE
         print(

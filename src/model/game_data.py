@@ -21,11 +21,19 @@ class GameData:
         self.setup_game_data()
 
     def setup_game_data(self):
+        """
+        Initialise tiles, dev cards and items from JSON data
+        :return:
+        """
         self.import_tiles()
         self.import_dev_cards()
         self.import_items()
 
     def import_tiles(self):
+        """
+        Load tile data from JSON file and add to list
+        :return:
+        """
         json_data = self.file_handler.load_data_from_json("tiles")
 
         for tile in json_data:
@@ -47,6 +55,10 @@ class GameData:
                 self.outdoor_tiles.append(new_tile)
 
     def import_dev_cards(self):
+        """
+        Load dev card data from JSON file and add to list
+        :return:
+        """
         json_data = self.file_handler.load_data_from_json("devcard")
 
         for card in json_data:
@@ -72,6 +84,10 @@ class GameData:
             self.dev_cards.append(dev_card)
 
     def import_items(self):
+        """
+        Load item data from JSON file and add to list
+        :return:
+        """
         json_data = self.file_handler.load_data_from_json("items")
 
         for item in json_data:
@@ -89,6 +105,11 @@ class GameData:
             self.items.append(new_item)
 
     def get_tile_by_name(self, name):
+        """
+        Return the tile object from given name
+        :param name:
+        :return:
+        """
         for tile in self.indoor_tiles:
             if tile.name == name:
                 return tile
@@ -98,6 +119,11 @@ class GameData:
                 return tile
 
     def remove_tile_from_deck_by_name(self, name):
+        """
+        Remove tile object from list by given name
+        :param name:
+        :return:
+        """
         if len(self.indoor_tiles) > 0:
             for index, tile in enumerate(self.indoor_tiles):
                 if tile.name == name:
@@ -110,16 +136,32 @@ class GameData:
 
     # Junho
     def shuffle_devcard_deck(self):
+        """
+        Randomly sort devcards in list
+        :return:
+        """
         random.shuffle(self.dev_cards)
 
     def shuffle_tiles_deck(self):
+        """
+        Randomly sort tiles in list
+        :return:
+        """
         random.shuffle(self.indoor_tiles)
         random.shuffle(self.outdoor_tiles)
 
     def shuffle_tile_cards(self):
+        """
+        Randomly sort tiles in list
+        :return:
+        """
         random.shuffle(self.indoor_tiles)
         random.shuffle(self.outdoor_tiles)
 
     def remove_two_devcards(self):
+        """
+        Remove top two dev cards as per rules
+        :return:
+        """
         self.dev_cards.pop()
         self.dev_cards.pop()

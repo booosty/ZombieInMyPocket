@@ -6,7 +6,6 @@ from model.direction import Direction
 from model.game import Game
 from model.state import State
 from model.file_handler import FileHandler
-from model.graph import Graph
 
 
 class Commands(cmd.Cmd):

@@ -12,6 +12,13 @@ class ImageHandler:
 
     # William
     def create_map_image(self, game_map, player, grid=(9, 9)):
+        """
+        Creates a new image based of current game map data and overwrites old image
+        :param game_map:
+        :param player:
+        :param grid:
+        :return:
+        """
         width, height = self.size
 
         image_size = (width * grid[1], height * grid[0])
