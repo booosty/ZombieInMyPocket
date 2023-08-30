@@ -51,19 +51,23 @@ class Game:
 
         # Out of time lose condition
         if self.time == 12:
+            self.health_turn_graph.increase_turn()
+            self.health_turn_graph.add_health(self.player.health)
             print(
                 Fore.RED
-                + "Sorry time has run out for you! You loose."
+                + "Sorry time has run out for you! You lose."
                 + Style.RESET_ALL
             )
-            self.graph.generate_health_turn_graph()
+            self.health_turn_graph.generate_health_turn_graph()
             exit()
 
         if self.state == State.WON:
+            self.health_turn_graph.increase_turn()
+            self.health_turn_graph.add_health(self.player.health)
             print(
                 Fore.GREEN + "Congratulations you have won the game!" + Style.RESET_ALL
             )
-            self.graph.generate_health_turn_graph()
+            self.health_turn_graph.generate_health_turn_graph()
             exit()
 
         state = Fore.BLUE + ""
@@ -195,7 +199,6 @@ class Game:
         if self.state == State.MOVING:
             self.state = State.COWERING
             self.player.set_health(3)
-            self.health_turn_graph.increase_turn()
             self.discard_devcard()
             print(
                 Fore.MAGENTA
@@ -388,6 +391,9 @@ class Game:
             + "Drawing a card from the pile..."
             + Style.RESET_ALL
         )
+
+        self.health_turn_graph.increase_turn()
+        self.health_turn_graph.add_health(self.player.health)
 
         drawn_card = self.game_data.dev_cards.pop(0)
         self.do_devcard_effect(drawn_card)

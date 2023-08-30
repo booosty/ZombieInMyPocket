@@ -51,6 +51,7 @@ class Player:
                 + "Sorry you have run out of health! You loose."
                 + Style.RESET_ALL
             )
+            self.game.generate_health_turn_graph()
             exit()
 
     # William
