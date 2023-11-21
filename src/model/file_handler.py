@@ -73,6 +73,57 @@ class LoadStrategy(ABC):
         pass
 
 
+class LoadPickleStrategy(LoadStrategy):
+    """
+    Concrete Load with Pickle Strategy
+    """
+
+    def load(self, filename=""):
+        root = tk.Tk()
+        root.withdraw()  # Hide the main window
+
+        root.attributes("-topmost", True)  # Make the file dialog appear on top
+
+        file_path = filedialog.askopenfilename(
+            filetypes=[("Pickle Files", "*.pkl")]
+        )
+
+        root.attributes("-topmost", False)
+
+        if file_path:
+            with open(file_path, "rb") as file:
+                game = pickle.load(file)
+
+            # Restore the image_handler attribute
+            game.image_handler = ImageHandler()
+
+            return game
+
+class LoadShelveStrategy(LoadStrategy):
+    """
+    Concrete Load with Shelve Strategy
+    """
+
+    def load(self, filename=""):
+        if filename != "":
+            with shelve.open(str(FileHandler.root_dir / "saves") + "\\" + filename + ".db") as file:
+                game = file["game"]
+            return game
+        else:
+            root = tk.Tk()
+            root.withdraw()
+            file_path = filedialog.askopenfilename(
+                filetypes=[("Shelve Files", "*.bak"), ("All Files", "*.*")]
+            )
+
+            if file_path:
+                # Remove extension from filepath
+                file_path = file_path[:-4]
+                print(file_path)
+                with shelve.open(file_path) as file:
+                    game = file["game"]
+                return game
+
 class FileHandler:
     """
     Object to hold file related methods e.g. saving/loading game state
