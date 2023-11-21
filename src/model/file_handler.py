@@ -1,4 +1,5 @@
 import json
+from abc import ABC
 from pathlib import Path
 import pickle
 import shelve
@@ -7,10 +8,29 @@ import tkinter as tk
 from tkinter import filedialog
 
 
+class SaveStrategy(ABC):
+    """
+    Save Strategy Interface
+    """
+
+    def save(self, game, filename):
+        pass
+
+
+class LoadStrategy(ABC):
+    """
+    Load Strategy Interface
+    """
+
+    def load(self, filename=""):
+        pass
+
+
 class FileHandler:
     """
     Object to hold file related methods e.g. saving/loading game state
     """
+
     def __init__(self):
         self.root_dir = Path(__file__).parent.parent
 
@@ -115,5 +135,3 @@ class FileHandler:
             game.image_handler = ImageHandler()
 
             return game
-
-
