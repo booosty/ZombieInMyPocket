@@ -21,7 +21,7 @@ class FileHandler:
         :param filename:
         :return:
         """
-        file = open(str(self.root_dir / "data") + "\\" + filename + ".json")
+        file = open(str(self.root_dir / "data") + "/" + filename + ".json")
         data = json.load(file)
         file.close()
         return data

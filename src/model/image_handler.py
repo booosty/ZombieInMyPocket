@@ -28,14 +28,14 @@ class ImageHandler:
             for col in range(grid[1]):
                 offset = width * col, height * row
                 if game_map[row][col] == 0:
-                    new_image = Image.open(str(self.root_dir) + "\\blank.png")
+                    new_image = Image.open(str(self.root_dir) + "/blank.png")
 
-                    new_image = ImageOps.fit(new_image, self.size, Image.ANTIALIAS)
+                    new_image = ImageOps.fit(new_image, self.size)
                     new_image = ImageOps.expand(new_image, border=1, fill="black")
                     map_image.paste(new_image, offset)
                 else:
                     new_image = Image.open(
-                        str(self.root_dir) + "\\" + game_map[row][col].img_src
+                        str(self.root_dir) + "/" + game_map[row][col].img_src
                     )
 
                     rotated_image = None
@@ -50,7 +50,7 @@ class ImageHandler:
                         case 3:
                             rotated_image = new_image.rotate(90)
 
-                    new_image = ImageOps.fit(rotated_image, self.size, Image.ANTIALIAS)
+                    new_image = ImageOps.fit(rotated_image, self.size)
 
                     map_image.paste(new_image, offset)
 
