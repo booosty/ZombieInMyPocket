@@ -1,7 +1,7 @@
 import cmd
 from colorama import Fore, Style
 
-from model.database_handler import DatabaseHandler, SQLiteConnectionFactory, SQLiteHandler
+from model.database_handler import SQLiteConnectionFactory, SQLiteHandler
 from model.direction import Direction
 from model.game import Game
 from model.state import State
