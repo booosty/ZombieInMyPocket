@@ -10,19 +10,45 @@ class DatabaseConnectionFactory(ABC):
     Database Abstract Factory
     """
 
-    def create_connection(self):
+    def create_connection(self, path):
         pass
 
-    def create_cursor(self):
+    def create_cursor(self, db_connection):
         pass
 
 
 class IDatabaseHandler(ABC):
+    """
+    DatabaseHandler Interface
+    """
     def save(self, game):
         pass
 
     def load(self):
         pass
+
+
+class SQLiteConnectionFactory(DatabaseConnectionFactory):
+    """
+    Concrete Factory for SQLite
+    """
+    def create_connection(self, path):
+        connection = None
+        try:
+            connection = connect(path)
+        except Error as err:
+            print(
+                Fore.RED
+                + f"SQLite Error: {err}"
+                + Style.RESET_ALL
+            )
+        except Exception as e:
+            print(e)
+        finally:
+            return connection
+
+    def create_cursor(self, db_connection):
+        return db_connection.cursor()
 
 
 # William
