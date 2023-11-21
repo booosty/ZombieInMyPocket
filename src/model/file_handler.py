@@ -17,6 +17,53 @@ class SaveStrategy(ABC):
         pass
 
 
+class SavePickleStrategy(SaveStrategy):
+    """
+    Concrete Save with Pickle Strategy
+    """
+
+    def save(self, game, filename):
+        root = tk.Tk()
+        root.withdraw()
+        root.attributes("-topmost", True)
+
+        file_path = filedialog.asksaveasfilename(
+            initialfile=filename,
+            defaultextension=".pkl",
+            filetypes=[("Pickle Files", "*.pkl")]
+        )
+
+        if file_path:
+            with open(file_path, "wb") as file:
+                pickle.dump(game, file)
+
+
+class SaveShelveStrategy(SaveStrategy):
+    """
+    Concrete Save with Shelve Strategy
+    """
+
+    def save(self, game, filename=""):
+        if filename != "":
+            with shelve.open(str(FileHandler.root_dir / "saves") + "\\" + filename + ".db", flag='c',
+                             protocol=4) as file:
+                file["game"] = game
+        else:
+            root = tk.Tk()
+            root.withdraw()
+            root.attributes("-topmost", True)
+
+            file_path = filedialog.asksaveasfilename(
+                initialfile=filename,
+                defaultextension=".shelf",
+                filetypes=[("Shelve Files", "*.shelf"), ("All Files", "*.*")]
+            )
+
+            if file_path:
+                with shelve.open(file_path, "c") as file:
+                    file["game"] = game
+
+
 class LoadStrategy(ABC):
     """
     Load Strategy Interface
