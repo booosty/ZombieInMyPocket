@@ -9,10 +9,19 @@ class DatabaseConnectionFactory(ABC):
     """
     Database Abstract Factory
     """
+
     def create_connection(self):
         pass
 
     def create_cursor(self):
+        pass
+
+
+class IDatabaseHandler(ABC):
+    def save(self, game):
+        pass
+
+    def load(self):
         pass
 
 
