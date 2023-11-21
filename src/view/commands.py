@@ -1,7 +1,7 @@
 import cmd
 from colorama import Fore, Style
 
-from model.database_handler import DatabaseHandler
+from model.database_handler import DatabaseHandler, SQLiteConnectionFactory, SQLiteHandler
 from model.direction import Direction
 from model.game import Game
 from model.state import State
@@ -17,7 +17,8 @@ class Commands(cmd.Cmd):
         self.prompt = ">> "
         self.game = Game()
         self.file_handler = FileHandler()
-        self.database_handler = DatabaseHandler()
+        self.connection_factory = SQLiteConnectionFactory()
+        self.database_handler = SQLiteHandler(self.connection_factory)
         self.args = args
         self.command_methods = {
             "start": self.do_start,
