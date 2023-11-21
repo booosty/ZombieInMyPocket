@@ -1,7 +1,19 @@
 import pickle
+from abc import ABC
 from pathlib import Path
 from sqlite3 import connect, Error, Binary
 from colorama import Fore, Style
+
+
+class DatabaseConnectionFactory(ABC):
+    """
+    Database Abstract Factory
+    """
+    def create_connection(self):
+        pass
+
+    def create_cursor(self):
+        pass
 
 
 # William
@@ -9,6 +21,7 @@ class DatabaseHandler:
     """
     Main object to handle database connections e.g. SQLite, MySQL
     """
+
     def __init__(self):
         self.root_dir = Path(__file__).parent.parent
 
