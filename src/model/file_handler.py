@@ -132,9 +132,15 @@ class FileHandler:
     """
     root_dir = Path(__file__).parent.parent
 
-    def __init__(self, save_strategy, load_strategy):
-        self.save_strategy = save_strategy
-        self.load_strategy = load_strategy
+    def __init__(self):
+        self.save_strategy = None
+        self.load_strategy = None
+
+    def set_save_strategy(self, strategy):
+        self.save_strategy = strategy
+
+    def set_load_strategy(self, strategy):
+        self.load_strategy = strategy
 
     def save_game(self, game, filename):
         self.save_strategy.save(game, filename)
@@ -153,4 +159,3 @@ class FileHandler:
         data = json.load(file)
         file.close()
         return data
-

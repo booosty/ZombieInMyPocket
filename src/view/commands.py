@@ -5,7 +5,8 @@ from model.database_handler import SQLiteConnectionFactory, SQLiteHandler
 from model.direction import Direction
 from model.game import Game
 from model.state import State
-from model.file_handler import FileHandler
+from model.file_handler import FileHandler, SavePickleStrategy, SaveShelveStrategy, LoadPickleStrategy, \
+    LoadShelveStrategy
 
 
 class Commands(cmd.Cmd):
@@ -291,6 +292,9 @@ class Commands(cmd.Cmd):
         """
         Save the current game to a file
         """
+        save_with_pickle_strategy = SavePickleStrategy()
+        save_with_shelve_strategy = SaveShelveStrategy()
+
         params = line.split()
 
         if len(params) < 1:
@@ -306,15 +310,17 @@ class Commands(cmd.Cmd):
         if self.game.state != State.STOPPED:
             try:
                 if method == "pickle":
-                    self.file_handler.save_game_with_pickle(self.game, filename)
+                    self.file_handler.set_save_strategy(save_with_pickle_strategy)
+                    self.file_handler.save_game(self.game, filename)
                     print(Fore.GREEN + f"Game saved as '{filename}.pkl' using pickle" + Style.RESET_ALL)
                 # William
                 elif method == "shelf":
+                    self.file_handler.set_save_strategy(save_with_shelve_strategy)
                     if filename:
-                        self.file_handler.save_game_with_shelve(self.game, filename)
+                        self.file_handler.save_game(self.game, filename)
                         print(Fore.GREEN + f"Game saved as '{filename}.shelf' using shelf" + Style.RESET_ALL)
                     else:
-                        self.file_handler.save_game_with_shelve(self.game)
+                        self.file_handler.save_game(self.game)
                         print(Fore.GREEN + f"Game saved using shelf." + Style.RESET_ALL)
                 else:
                     print(Fore.RED + "Invalid save method. Use 'pickle' or 'shelf'." + Style.RESET_ALL)
@@ -351,7 +357,7 @@ class Commands(cmd.Cmd):
         Load game state from database
         """
         try:
-            loaded_game = self.database_handler.load_from_sqlite()
+            loaded_game = self.database_handler.load()
             if loaded_game:
                 self.game = loaded_game
                 self.game.image_handler.create_map_image(self.game.game_data.map, self.game.player)
@@ -369,6 +375,8 @@ class Commands(cmd.Cmd):
         Load a saved game from a file
         """
         params = line.split()
+        load_with_pickle_strategy = LoadPickleStrategy()
+        load_with_shelve_strategy = LoadShelveStrategy()
 
         if len(params) < 1:
             print(Fore.RED + "Usage: load <method> <filename = optional>" + Style.RESET_ALL)
@@ -393,7 +401,8 @@ class Commands(cmd.Cmd):
 
         try:
             if method == "pickle":
-                loaded_game = self.file_handler.load_game_with_pickle()
+                self.file_handler.set_load_strategy(load_with_pickle_strategy)
+                loaded_game = self.file_handler.load_game()
                 if loaded_game:
                     self.game = loaded_game
                     self.game.image_handler.create_map_image(self.game.game_data.map, self.game.player)
@@ -403,10 +412,11 @@ class Commands(cmd.Cmd):
                     print(Fore.RED + "Could not load game from selected file" + Style.RESET_ALL)
 
             elif method == "shelf":
+                self.file_handler.set_load_strategy(load_with_shelve_strategy)
                 if filename:
-                    loaded_game = self.file_handler.load_game_with_shelve(filename)
+                    loaded_game = self.file_handler.load_game(filename)
                 else:
-                    loaded_game = self.file_handler.load_game_with_shelve()
+                    loaded_game = self.file_handler.load_game()
                 if loaded_game:
                     self.game = loaded_game
                     self.game.image_handler.create_map_image(self.game.game_data.map, self.game.player)
