@@ -334,7 +334,7 @@ class Commands(cmd.Cmd):
         """
         if self.game.state != State.STOPPED:
             try:
-                self.database_handler.save_to_sqlite(self.game)
+                self.database_handler.save(self.game)
                 print(Fore.GREEN + f"Game saved to database." + Style.RESET_ALL)
             except Exception as e:
                 print(Fore.RED + f"An error occurred while saving the game: {e}" + Style.RESET_ALL)
